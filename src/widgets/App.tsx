@@ -56,29 +56,5 @@ export default class App extends ThemedMixin(WidgetBase) {
 				</div>
 			</div>
 		);
-		// return v('div', [
-		// 	v('div', { classes: this.theme(css.root) },  [
-		// 		v('div', { classes: this.theme(css.container) },  [
-		// 			v('h1', { classes: this.theme(css.title) }, [ 'Biz-E-Bodies' ]),
-		// 			v('div', { classes: this.theme(css.links) }, [
-		// 				w(Link, { key: 'home', to: 'home', classes: this.theme(css.link) }, [ 'Home' ]),
-		// 				w(Link, { key: 'directory', to: 'directory', classes: this.theme(css.link) }, [ 'Worker Directory' ]),
-		// 				w(Link, { key: 'newWorker', to: 'new-worker', classes: this.theme(css.link) }, [ 'New Worker' ])
-		// 			])
-		// 		])
-		// 	]),
-		// 	v('div', { classes: this.theme(css.main) },  [
-		// 		w(BannerOutlet, {data: this._workerData}),
-		// 		w(WorkerFormOutlet, {
-		// 			formData: this._newWorker,
-		// 			onFormInput: this._onFormInput,
-		// 			onFormSave: this._addWorker
-		// 		}),
-		// 		w(FilteredWorkerContainerOutlet, {
-		// 			workerData: this._workerData
-		// 		}),
-				// w(WorkerContainerOutlet, {workerData: this._workerData})
-		// 	])
-		// ]);
 	}
 }
