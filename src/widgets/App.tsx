@@ -55,6 +55,6 @@ export default class App extends ThemedMixin(WidgetBase) {
 					<WorkerContainerOutlet workerData={this._workerData}></WorkerContainerOutlet>
 				</div>
 			</div>
-		);
+		); 
 	}
 }
