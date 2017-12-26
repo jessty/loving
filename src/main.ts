@@ -4,7 +4,7 @@ import { registerRouterInjector } from '@dojo/routing/RouterInjector';
 
 import App from './widgets/App';
 
-const root = document.querySelector('my-app') || undefined;
+const root = document.querySelector('#app') || undefined;
 
 const routingConfig = [
 	{
