@@ -1,7 +1,7 @@
 import { WidgetBase } from '@dojo/widget-core/WidgetBase';
 import { TypedTargetEvent } from '@dojo/widget-core/interfaces';
 import { ThemedMixin, theme } from '@dojo/widget-core/mixins/Themed';
-import * as css from '../styles/login.m.css';
+import * as css from './login.m.css';
 import { tsx } from '@dojo/widget-core//tsx';
 
 export interface LoginProp {

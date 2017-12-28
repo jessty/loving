@@ -1,5 +1,5 @@
 .root {
- background-image: url('../assets/background2.jpg');
+ background-image: url('./../../assets/background2.jpg');
  background-origin: border-box;
  background-repeat: no-repeat;
  background-size: cover;
@@ -45,11 +45,15 @@
     margin: 0.7em 0em;
 }
 .field>input{
+    font-size: 16px;
     box-sizing: border-box;
     width: 100%;
-    padding: 1em;
+    padding: 0.8em 0.5em;
     border: 1px solid rgb(236, 233, 233);
     border-radius: 2px;
+}
+.field>input[type='password'] {
+    letter-spacing: 0.15em;
 }
 .btn {
     display: inline-block;
@@ -67,6 +71,7 @@
     background-color: rgb(73, 133, 202);
 }
 .foot {
+
     background-color: rgb(236, 234, 229);
     padding: 0.5em;
 }

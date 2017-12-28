@@ -14,14 +14,18 @@ import { theme, ThemedMixin } from '@dojo/widget-core/mixins/Themed';
 
 import * as css from './../styles/app.m.css';
 import { tsx } from '@dojo/widget-core//tsx';
-import Login from './Login';
+import LoginOutlet from './../outlets/LoginOutlet';
+import { FrameOutlet } from '../outlets/FrameOutlet';
 
 @theme(css)
 export default class App extends ThemedMixin(WidgetBase) {
-	
+
 	protected render() {
 		return (
-			<Login></Login>
+			<div>
+				<LoginOutlet></LoginOutlet>
+				<FrameOutlet></FrameOutlet>
+			</div>
 		);
 	}
 
