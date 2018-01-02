@@ -1,0 +1,13 @@
+@import './variables';
+
+.root {
+    /* composes: nameLabel from './workerForm.m.css'; */
+}
+
+.input {
+	height: 36px;
+	border:var(--input-border);
+	box-sizing: border-box;
+	border-bottom-color: color(#d6dde3 blackness(60%));
+	padding: 8px;
+}

@@ -12,7 +12,8 @@
     "@dojo/widgets": "~0.2.1",
     "dijit": "^1.13.0",
     "dojo": "^1.13.0",
-    "dojo-themes": "^1.13.0"
+    "dojo-themes": "^1.13.0",
+    "axios": "^0.17.1"
   },
   "devDependencies": {
     "@dojo/cli-build-webpack": "~0.2.0",

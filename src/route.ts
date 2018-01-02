@@ -1,5 +1,3 @@
-
-
 export const routeConfig = [
 	{
 		path: '/login',
@@ -11,23 +9,39 @@ export const routeConfig = [
 		children: [
             {
                 path: 'home',
-				outlet: 'home'
-            },
+				outlet: 'home',
+				children: [
+
+				]
+			},
 			{
 				path: 'center',
-				outlet: 'center'
+				outlet: 'center',
+				defaultParams: {tab: 'myMood'}
+			},
+			{
+				path: 'center?{tab}',
+				outlet: 'center',
+				children: [
+					
+				]
 			},
 			{
 				path: 'activity',
-				outlet: 'activity'
+				outlet: 'activity',
+				children: [
+
+				]
             },
 			{
 				path: 'news',
-				outlet: 'news'
+				outlet: 'news',
+				children: [
+
+				]
 			}
 		]
 	},
-   
 ];
 
 export default routeConfig;

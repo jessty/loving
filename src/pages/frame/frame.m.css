@@ -1,0 +1,64 @@
+@import './../../styles/variables';
+.root {
+    background-color: var(--bgcolor);
+}
+.navFixed {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+.navFixed > nav {
+    margin: 0 auto;
+    width: 70%;
+    overflow: hidden;
+}
+.logo {
+    float: left;
+    height: 3em;
+    width: 8em;
+    text-decoration: none;
+    cursor: pointer;
+    /* background-size: cover; */
+    background-position-y:60%;
+    background-size: 200%;
+    background-image: url('./../../assets/logo.png');
+}
+/* .logo > img {
+    height: 50px;
+} */
+.link {
+    box-sizing: border-box;
+    position: relative;
+    float: right;
+    margin:0em 1em;
+    padding: 1em 1em;
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.link::after{
+    content: ' ';
+    display: inline-block;
+    width: 0%;
+    height: 3px;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    border-bottom: 2px solid rgb(29, 106, 207);
+    transition: all 0.2s ease-in-out;
+}
+.link:hover::after {
+    left:0px;
+    width: 100%;
+}
+.userSetting {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+}
+.userSetting > img {
+    height: 1.4em;
+}
+.root > section {
+    padding-top: 50px;
+}

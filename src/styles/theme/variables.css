@@ -1,0 +1,16 @@
+:root {
+	--font: 'arial';
+	--container: #f9f9f9;
+	--body: #000;
+	--card: #fff;
+	--accent: #0071f2;
+	--secondary-accent: #075cbe;
+	--component-accent: #f4f4f4;
+	--padding: 32px;
+	--spacing: 16px;
+	--label-width: 7em;
+	--input-radius: 3px;
+	--input-width: 15em;
+	--input-height: 2em;
+	--input-border: 1px solid #d6dde3;
+}

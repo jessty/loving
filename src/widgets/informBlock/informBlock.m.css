@@ -1,0 +1,73 @@
+@import './../../styles/theme/variables';
+.root {
+    
+}
+.rootFixed {
+    position: relative;
+}
+.editIcon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    margin: 10px;
+    top: 0px;
+    right: 0px;
+    background-image: url(./../../assets/edit.png);
+    background-size: cover;
+    cursor: pointer;
+}
+.field {
+    margin: 0.2em
+}
+.fieldLabel {
+    padding:0.5em 0em;
+    color: #5e5e5e;
+    text-align: right;
+    display: inline-block;
+    width: var(--label-width);
+}
+.fieldResult {
+    padding-left: 0.5em;
+}
+.field>input{
+    width:  var(--input-width);
+    height: var(--input-height);
+    font-size: 16px;
+    padding: 0em 0.5em;
+    box-sizing: border-box;
+    border: var(--input-border);
+    border-radius: var(--input-radius);
+}
+.field>textarea {
+    min-width:  var(--input-width);
+    max-width:  80%;
+    /* box-sizing: border-box; */
+    font-size: 16px;
+    padding: 0.5em;
+    border: var(--input-border);
+    border-radius: var(--input-radius);
+}
+.textareField {
+    display: table;
+}
+.textareField > * {
+    vertical-align: text-top;
+}
+.textareField>label {
+    padding-top: 0.4em;
+}
+.fixTextarea > span {
+    display: inline-block;
+    margin-top: 0.4em;
+    text-indent: 2em;
+    max-width: 56%;
+}
+.btnField {
+    padding-left: var(--label-width);
+}
+.btn {
+    margin-right: 2em;
+    padding-left: 1em!important;
+    padding-right: 1em!important;
+    border-radius: var(--input-radius);
+}

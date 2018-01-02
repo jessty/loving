@@ -1,0 +1,65 @@
+@import './../../styles/theme/variables';
+.root {
+    width: var(--input-width);
+    height: var(--input-height);
+    /* font-size: 16px; */
+}
+
+.rootFixed {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    border: var(--input-border);
+    position: relative;
+    border-radius: var(--input-radius);
+}
+.result, .choises {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+}
+.result {
+    padding: 0em 2em 0em 0.5em;
+}
+.downBtn {
+    margin-left: -2.1em;
+    padding: 0.2em 0.5em;
+    border-left: 1px solid #d6dde2;
+    display: inline-block;
+    cursor: pointer;
+    font-family: dojo2BaseTheme!important;
+    font-style: normal;
+    font-weight: 400;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+}
+.downBtn::after {
+    content: "\E313";
+}
+
+.choisesPane {
+    position: absolute;
+    width: 100%;
+    border-bottom: 1px solid #d6dde2;
+    border-left: 1px solid #d6dde2;
+    border-right: 1px solid #d6dde2;
+    top: calc( 100% + 1px );
+    left: -1px;
+    max-height: 6em;
+    overflow-y: auto;
+    background-color: white;
+}
+.choises {
+    height: 2em;
+    padding-left: 0.3em;
+    line-height: 2em;
+    vertical-align: middle;
+}
+.choises:not(:last-child) {
+    border-bottom: 1px solid #d6dde2;
+}
+.choises:hover {
+    background-color: #d6dde2;
+}

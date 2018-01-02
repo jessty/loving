@@ -1,5 +1,5 @@
 import { Outlet } from '@dojo/routing/Outlet';
-import Frame from './../widgets/frame/Frame';
+import Frame from './../pages/frame/Frame';
 // import Home from './../widgets/home/Home';
 import { MapParamsOptions } from '@dojo/routing/interfaces';
 

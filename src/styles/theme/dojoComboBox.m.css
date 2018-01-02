@@ -1,0 +1,152 @@
+@import './variables';
+/* .root {
+	position: relative;
+	display: inline-block;
+	box-sizing: border-box;
+	width: 200px;
+}
+
+.root * {
+	box-sizing: border-box;
+}
+
+.controls {
+	position: relative;
+}
+
+.input {
+    border-bottom-color: #5c6c7c;
+    line-height: 24px;
+    padding: 8px 24px 8px 8px;
+    transition: all .25s ease;
+    width: 100%;
+	padding: 2px 4px;
+	padding-right: 2em;
+	border: 1px solid #5c6c7c;
+	background: var(--component-background);
+}
+
+.input::-ms-clear {
+	display: none;
+}
+
+.clearable {
+	padding-right: 4em;
+}
+
+.dropdown {
+	border: 1px solid #5c6c7c;
+	background: var(--component-background);
+	position: absolute;
+	width: 100%;
+	z-index: 5;
+}
+
+.option {
+	cursor: pointer;
+}
+
+.disabledOption {
+	color: var(--disabled-color);
+	font-style: italic;
+	cursor: default;
+}
+
+.selected {
+	background: var(--selected-background);
+	color: var(--selected-color);
+}
+
+.clear,
+.trigger {
+	position: absolute;
+	cursor: pointer;
+	font-size: 0;
+	border: none;
+	background: none;
+	top: 50%;
+	transform: translateY(-50%);
+	padding: 0;
+}
+
+.clear i, .trigger i {
+	font-size: initial;
+}
+
+.trigger {
+	right: 7px;
+}
+
+.clear {
+	right: 27px;
+}
+
+.valid { }
+.invalid { }
+.open { } */
+
+
+/* .root input {
+    border-bottom-color: #5c6c7c;
+    line-height: 24px;
+    padding: 8px 24px 8px 8px;
+    transition: all .25s ease;
+    width: 100%;
+} */
+.clear {
+    background: none;
+    border: 1px solid transparent;
+    color: #d6dde2;
+    cursor: pointer;
+    font-size: 0;
+    outline: none;
+    padding: 0;
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.trigger {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border-radius: 0;
+    border: 1px solid transparent;
+    border-left: 1px solid #d6dde2;
+    bottom: 1px;
+    color: #5c6c7c;
+    cursor: pointer;
+    display: block;
+    font-size: 0;
+    line-height: 24px;
+    outline: 0;
+    padding: 8px 12px;
+    position: absolute;
+    right: 0;
+    top: 1px;
+    transition: border-color .25s ease;
+}
+/* .trigger i {
+
+} */
+.icon {
+    font-size: 16px;
+    font-family: dojo2BaseTheme!important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+}
+.downIcon::before {
+    content: "\E313";
+}
+.closeIcon::before {
+    content: "\E5CD";
+}
+
+

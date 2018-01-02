@@ -2,4 +2,11 @@
 * {
     margin: 0px;
     padding: 0px;
+    font-family: Arial, sans-serif, 宋体;
+}
+@font-face {
+    font-family: dojo2BaseTheme;
+    src: url(./assets/font.ttf) format("truetype");
+    font-weight: 400;
+    font-style: normal
 }

@@ -1,0 +1,17 @@
+@import './variables';
+.root {
+	height: 36px;
+	border: var(--input-border);
+	background: var(--card);
+	color: var(--accent);
+	font-size: 16px;
+	font-weight: bold;
+	padding: 8px;
+	/* min-width: 150px; */
+	vertical-align: middle;
+	transition: all 0.3s ease-in-out;
+}
+.root:hover {
+	color: var(--card);
+	background: var(--accent);
+}

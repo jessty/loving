@@ -1,0 +1,65 @@
+@import './../../styles/theme/variables';
+.root {
+    margin: 0 auto;
+    width: 65%;
+    min-width: 800px;
+}
+.myNav::after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.link {
+    box-sizing: border-box;
+    position: relative;
+    float: left;
+    margin:0em 1em;
+    padding: 1em 1em;
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
+
+.link::after{
+    content: ' ';
+    display: inline-block;
+    width: 0%;
+    height: 3px;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    border-bottom: 2px solid rgb(29, 106, 207);
+    transition: all 0.2s ease-in-out;
+}
+.link:hover::after {
+    left:0px;
+    width: 100%;
+}
+
+/* inform Tab */
+.inform {
+
+}
+.inform > label {
+    display: inline-block;
+    color: #5B5B5B;
+    font-size: 16px;
+    font-weight: bold;
+    width: 6em;
+    padding: 0.25em 0.5em;
+    border-bottom:  var(--input-border);
+    cursor: pointer;
+}
+.inform > input {
+    display: none;
+}
+.inform input:checked + div{
+    /* display: block; */
+    height: 400px;
+}
+.inform input + div{
+    /* display: none; */
+    overflow: hidden;
+    height: 0px;
+    transition: height 0.3s ease-in-out;
+}
