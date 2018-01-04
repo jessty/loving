@@ -1,12 +1,13 @@
 import { Outlet } from '@dojo/routing/Outlet';
 import Center, { MY_TABS } from './../../pages/center/Center';
 
-export const CenterOutlet = Outlet(Center, 'center', ({params}) => {
-    console.log('inform', params.tab);
-        if('tab' in params && params.tabs) {
-            for(let tab in MY_TABS) {
-                if (tab === params.tabs) {
-                    return {tab: tab};
+export const CenterOutlet = Outlet(Center, 'center', (inform) => {
+    let params = inform.params;
+        if('tab' in params && params.tab) {
+            let key: 'MOOD'|'ALBUM'|'INFORM'|'EMAIL'|'ACTIVITY'|'CREDIT';
+            for(key in MY_TABS) {
+                if (MY_TABS[key] === params.tab) {
+                    return {tab: params.tab};
                 }
             }
             //route to Error.html

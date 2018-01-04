@@ -15,17 +15,18 @@ export const routeConfig = [
 				]
 			},
 			{
-				path: 'center',
-				outlet: 'center',
-				defaultParams: {tab: 'myMood'}
-			},
-			{
 				path: 'center?{tab}',
 				outlet: 'center',
 				children: [
 					
 				]
 			},
+			{
+				path: 'center',
+				outlet: 'center',
+				defaultParams: {tab: 'myMood'}
+			},
+			
 			{
 				path: 'activity',
 				outlet: 'activity',

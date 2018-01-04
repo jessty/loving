@@ -4,6 +4,7 @@
 }
 .rootFixed {
     position: relative;
+    background-color: white;
 }
 .editIcon {
     position: absolute;

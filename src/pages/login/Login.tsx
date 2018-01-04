@@ -18,6 +18,7 @@ export const LoginBase = ThemedMixin(WidgetBase);
 
 @theme(css)
 export default class Login extends LoginBase<LoginProp> {
+    private _animationState = 0;
     private _fields = [
         {
             type: 'select',
@@ -66,6 +67,7 @@ export default class Login extends LoginBase<LoginProp> {
         this._formData.confirmPsw = value;
     }
     private _submit(event: MouseEvent) {
+        this._animateForword();
         event.preventDefault();
         console.log('click');
     }
@@ -109,11 +111,44 @@ export default class Login extends LoginBase<LoginProp> {
             </div>
         );
     }
-
+    private _animateFirst(): Array<string> {
+        if(this._animationState >= 1) {
+            return ['animated', 'bounceOutLeft'];
+        }else {
+            return ['animated'];
+        }
+    }
+    private _animateSecond(): Array<string> {
+        if(this._animationState === 0) {
+            return ['animated', css.animateHidden];
+        }else if(this._animationState === 1) {
+            return ['animated', 'bounceInRight'];
+        }else{
+            return ['animated', 'bounceOutLeft'];
+        }
+    }
+    private _animateThird(): Array<string> {
+        if(this._animationState <= 1) {
+            return ['animated', css.animateHidden];
+        }else {
+            return ['animated', 'bounceInRight'];
+        }
+    }
+    private _animateForword() {
+        this._animationState = (this._animationState + 1) % 3;
+        this.invalidate();
+    }
+    private _animateBack() {
+        if (this._animationState === 0) {
+            return;
+        }
+        this._animationState = (this._animationState - 1) % 3;
+        this.invalidate();
+    }
     protected render() {
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
-                <div classes={[this.theme(css.form), css.signinBlock]}>
+                <div classes={[this.theme(css.form), css.block, ...this._animateFirst()]}>
                     <div classes={[this.theme(css.head), css.headFixed]}>
                         <h1></h1>
                         {/* <img src=""/> */}
@@ -127,11 +162,12 @@ export default class Login extends LoginBase<LoginProp> {
                         </p>
                     </div>
                 </div>
-                <div classes={css.signinBlock}>
-                    <InformBlock fields={this._fields}></InformBlock>
+                <div classes={[css.block, ...this._animateSecond()]}>
+                    <h3>请填写基本资料</h3>
+                    <InformBlock extraClasses={{'root': css.informBlock}} initState='edit' editable={true} readable={false} fields={this._fields} onSubmit={this._animateForword.bind(this)} onCancel={this._animateBack.bind(this)}></InformBlock>
                 </div>
-                <div classes={css.signinBlock}>
-                    <InformBlock fields={this._fields}></InformBlock>
+                <div classes={[css.block, ...this._animateThird()]}>
+                    <InformBlock initState='edit' editable={true} readable={false} fields={this._fields} onSubmit={this._animateForword.bind(this)} onCancel={this._animateBack.bind(this)}></InformBlock>
                 </div>
             </div>
         );

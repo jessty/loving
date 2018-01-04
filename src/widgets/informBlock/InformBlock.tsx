@@ -7,34 +7,45 @@ import * as css from './informBlock.m.css';
 // import * as css from './informBlock.m.css';
 // import { w } from '@dojo/widget-core/d';
 import Button from '@dojo/widgets/button/Button';
-import MySelect from './../MySelect/MySelect';
+import MySelect from './../mySelect/MySelect';
 // import {LabelValue} from './../MySelect/MySelect';
 
 
 export interface informBlockProp {
-    fields?: any;
+    fields?: Array<any>;
     informs?: any;
+    onSubmit?(): void;
+    onCancel?(): void;
+    initState: 'read'|'edit';
+    editable: Boolean;
+    readable: Boolean;
 }
 
 @theme(css)
 export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp> {
-    // private currentValue = 'baz';
-    // private open = false;
-    private _isEditing = true;
-    // private choises:Array<LabelValue> = [
-    //     {
-    //         value:1,
-    //         key:'111'
-    //     },
-    //     {
-    //         value:2,
-    //         key:'222'
-    //     },
-    //     {
-    //         value:3,
-    //         key:'333'
-    //     }
-    // ]
+
+    private _isEditing: Boolean;
+    private _readable: Boolean;
+    private _editable: Boolean;
+    private _fields: any;
+    private _initiated: Boolean;
+
+    private _toggleState() {
+        this._isEditing = !this._isEditing;
+        this.invalidate();
+        console.log('toggle');
+    }
+    private _onSubmitClick() {
+        let {onSubmit} = this.properties;
+        onSubmit ? onSubmit() : null;
+        console.log(this._editable);
+        this._readable ? this._toggleState() : null;
+    }
+    private _onCancelClick() {
+        let {onCancel} = this.properties;
+        onCancel ? onCancel() : null;
+        this._readable ? this._toggleState() : null;
+    }
     private _renderSelect(selectField: any, i: number) {
         return (
             <div classes={css.field} key={'select' + i}>
@@ -59,7 +70,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
     }
     private _renderTextArea(textAreaField: any, i: number) {
         return (
-            <div classes={[css.field, css.textareField, (this._isEditing?null:css.fixTextarea)]} key={'textArea' + i}>
+            <div classes={[css.field, css.textareField, (this._isEditing ? null : css.fixTextarea)]} key={'textArea' + i}>
                 <label classes={css.fieldLabel}>{textAreaField.label}</label>
                 {this._isEditing ?
                     <textarea value={textAreaField.value}></textarea> :
@@ -69,25 +80,29 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         );
     }
     private _renderEditState() {
-        let { fields } = this.properties;
-        return fields ? fields.map((field: any, i: number) => {
+
+        let fieldNodes: Array<any> =  this._fields ? this._fields.map((field: any, i: number) => {
             switch ( field.type ) {
                 case 'textinput': return this._renderTextInput(field, i);
                 case 'textarea': return this._renderTextArea(field, i);
                 case 'select': return this._renderSelect(field, i);
             }
-        }).concat(
+        }) : [];
+
+        let btnField = (
             <div classes={[css.field, css.btnField]} key='btnField'>
-                <Button onClick={this._toggleEditState} extraClasses={{'root': css.btn}}>提交</Button>
-                <Button onClick={this._toggleEditState} extraClasses={{'root': css.btn}}>取消</Button>
-            </div>
-        ) : null;
+                <Button onClick={this._onSubmitClick} extraClasses={{'root': css.btn}}>提交</Button>
+                {this._readable ? <Button onClick={this._onCancelClick} extraClasses={{'root': css.btn}}>取消</Button> : null}
+            </div>);
+        
+        return [...fieldNodes, btnField];
+
     }
     private _renderReadState() {
-        let { fields } = this.properties;
         let nodes: Array<any> = [];
-        nodes[0] = (<span classes={css.editIcon} onclick={this._toggleEditState}></span>);
-        let fieldNodes = fields ? fields.map((field: any, i: number) => {
+        this._editable ? nodes[0] = (<span classes={css.editIcon} onclick={this._toggleState}></span>) : null;
+
+        let fieldNodes = this._fields ? this._fields.map((field: any, i: number) => {
             switch ( field.type ) {
                 case 'textinput': return this._renderTextInput(field, i);
                 case 'textarea': return this._renderTextArea(field, i);
@@ -96,38 +111,25 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         }) : null;
         return [...nodes, ...fieldNodes];
     }
-    private _toggleEditState() {
-        this._isEditing = !this._isEditing;
-        this.invalidate();
+    private _initWidget() {
+        let {readable, editable, initState, fields} = this.properties;
+        if (!(readable || editable)) {
+            throw Error('Property Error: editable and readable can not be passed as \'false\' at the same time!');
+        }else if(initState === 'edit' && !editable) {
+            throw Error('Property Error: when initState is \'edit\',editable can not be passed as \'false\'!');
+        }else if(initState === 'read' && !readable) {
+            throw Error('Property Error: when initState is \'read\',readable can not be passed as \'false\'!');
+        }
+        this._readable = readable;
+        this._editable = editable;
+        this._isEditing = (initState === 'edit');
+        this._fields = fields;
+        this._initiated = true;
     }
     protected render() {
-        // w(ComboBox, {
-        //     results: ['foo', 'bar', 'baz'],
-        //     value: this.state.currentValue,
-        //     onChange: (value: string) => this.setState({ currentValue: value })
-        // });
-        // let { fields } = this.properties;
+        this._initiated ? null : this._initWidget();
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
-                {/* <ComboBox results={['foo','baz','boo']} clearable={true} value={this.currentValue} onChange={(value: string)=>{this.currentValue = value;}}></ComboBox>
-                <Button onClick={()=>{this.open = true;this.invalidate();}}>open</Button>
-                <Dialog title='My Dialog' open={this.open} onRequestClose={() => {this.open=false;this.invalidate();}}>'My dialog content...' </Dialog> */}
-                {/* {this._isEditing ? null : <span classes={css.editIcon} onclick={this._toggleEditState}></span>}
-                {
-                    fields ? fields.map((field: any) => {
-                        switch ( field.type ) {
-                            case 'textinput': return this._renderTextInput(field);
-                            case 'textarea': return this._renderTextArea(field);
-                            case 'select': return this._renderSelect(field);
-                        }
-                    }) : null
-                }
-                {this._isEditing ? (
-                    <div classes={css.field}>
-                        <Button onClick={this._toggleEditState}>提交</Button>
-                        <Button onClick={this._toggleEditState}>取消</Button>
-                    </div>) : null
-                } */}
                 {this._isEditing ? this._renderEditState() : this._renderReadState()}
             </div>
         );

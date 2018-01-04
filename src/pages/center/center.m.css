@@ -1,13 +1,21 @@
 @import './../../styles/theme/variables';
 .root {
-    margin: 0 auto;
-    width: 65%;
+    /* margin: 0 auto; */
+    /* width: 65%; */
     min-width: 800px;
+}
+.root>div:nth-child(2) {
+    background-color: white;
+    width: 65%;
+    margin: 0 auto;
 }
 .myNav::after{
     content: '';
     display: block;
     clear: both;
+}
+.myNav {
+    border-bottom: 2px solid #F7F7F7;
 }
 .link {
     box-sizing: border-box;
@@ -37,8 +45,11 @@
 }
 
 /* inform Tab */
+.inform:first-child{
+    margin-top: 2em;
+}
 .inform {
-
+    margin-left: 2em;
 }
 .inform > label {
     display: inline-block;
@@ -55,11 +66,14 @@
 }
 .inform input:checked + div{
     /* display: block; */
-    height: 400px;
+    height: 350px;
 }
 .inform input + div{
     /* display: none; */
     overflow: hidden;
     height: 0px;
     transition: height 0.3s ease-in-out;
+}
+.informBlock {
+    margin: 2em 0em 0em 2em;
 }

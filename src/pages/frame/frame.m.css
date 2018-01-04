@@ -6,6 +6,8 @@
     position: fixed;
     top: 0px;
     width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 1;
 }
 .navFixed > nav {
     margin: 0 auto;
@@ -58,7 +60,4 @@
 }
 .userSetting > img {
     height: 1.4em;
-}
-.root > section {
-    padding-top: 50px;
 }
