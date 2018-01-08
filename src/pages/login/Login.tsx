@@ -5,6 +5,7 @@ import { ThemedMixin, theme } from '@dojo/widget-core/mixins/Themed';
 import * as css from './login.m.css';
 import { tsx } from '@dojo/widget-core//tsx';
 import InformBlock from './../../widgets/informBlock/InformBlock';
+import Upload from './../../widgets/upload/Upload';
 
 export interface LoginProp {
     
@@ -167,7 +168,11 @@ export default class Login extends LoginBase<LoginProp> {
                     <InformBlock extraClasses={{'root': css.informBlock}} initState='edit' editable={true} readable={false} fields={this._fields} onSubmit={this._animateForword.bind(this)} onCancel={this._animateBack.bind(this)}></InformBlock>
                 </div>
                 <div classes={[css.block, ...this._animateThird()]}>
-                    <InformBlock initState='edit' editable={true} readable={false} fields={this._fields} onSubmit={this._animateForword.bind(this)} onCancel={this._animateBack.bind(this)}></InformBlock>
+                    <h3>实名认证</h3>
+                    <h4>身份证正面</h4>
+                    <Upload extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} action='http://localhost:8800' multiple={false} accept='image/*' onceChoose={false}></Upload>
+                    <h4>身份证背面</h4>
+                    <Upload extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} action='http://localhost:8800' multiple={false} accept='image/*' onceChoose={false}></Upload>
                 </div>
             </div>
         );

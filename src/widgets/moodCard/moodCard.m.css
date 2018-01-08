@@ -1,0 +1,78 @@
+.root {
+    
+}
+.rootFixed {
+    padding:1em 5em;
+    border-left: 2px solid #E9ECF3;
+    border-bottom: 2px solid #E9ECF3;
+    position: relative;
+    list-style: none;
+}
+.date {
+    padding: 10px 0px;
+    font-size: 20px;
+    position: absolute;
+    width: 5em;
+    top: 0px;
+    left: 0px;
+    transform: translate(-50%,-8%);
+    background: white;
+}
+.subMood {
+    position: relative;
+    margin: 15px -25px 15px 0px;
+    padding: 10px 0px;
+    border-bottom: 1px solid #E9ECF3;
+}
+.subMood:last-child {
+    border-bottom: none;
+    padding-bottom: 0px;
+}
+.deleteIcon {
+    position: absolute;
+    font-size: 16px;
+    color: red;
+    top: 0px;
+    right: 0px;
+    padding: 5px;
+    z-index: 0;
+    transform: translateY(-100%);
+    cursor: pointer;
+}
+/* .delete */
+.subMood>p {
+    text-indent: 2em;
+    margin-right: 25px;
+}
+.imgs {
+    margin-top: 10px;
+}
+.imgs>img {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.footSpans {
+    margin: 10px 0px;
+    
+    overflow: hidden;
+    font-size: 14px;
+}
+.time {
+    
+    float: left;
+}
+.footSpans>span:not(.time) {
+    float: right;
+    height: 1em;
+    margin-left: 10px;
+    padding: 5px;
+    cursor: pointer;
+}
+.footSpans>span>img {
+    height: inherit;
+    width: inherit;
+}

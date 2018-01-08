@@ -46,7 +46,7 @@ export default class MySelect extends ThemedMixin(WidgetBase)<MySelectProp> {
         //     disabled
         // } = this.properties;
         return (
-            <div classes={[this.theme(css.rootFixed), css.root]} onfocusout={() => { console.log('blur');this._isDown = false;this.invalidate();}}>
+            <div tabIndex={0} classes={[this.theme(css.rootFixed), css.root]} onfocusout={() => { console.log('blur');this._isDown = false;this.invalidate();}}>
                 <span classes={css.result}>{this._selectedChoise.label}</span>
                 <i classes={css.downBtn} onclick={() => {this._clickDownBtn();}}></i>
                 {this._isDown ? this._renderChoisesPane() : null}

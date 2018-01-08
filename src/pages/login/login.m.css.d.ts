@@ -12,3 +12,5 @@ export const foot: string;
 export const footFixed: string;
 export const textBtn: string;
 export const informBlock: string;
+export const uploadRoot: string;
+export const uploadImg: string;

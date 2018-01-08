@@ -1,0 +1,166 @@
+.root {
+    
+}
+.rootFixed {
+    padding: 0.5em;
+    background-color: #ffffff;
+    width: calc(142px + 6em);
+    /* background: #363636; */
+}
+.inform{
+    overflow: hidden;
+}
+.inform>*{
+    float: left;
+}
+.inform>a {
+    width: 6em;
+    height: 6em;
+}
+.inform>div{
+    width: 130px;
+}
+.inform>a>img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.inform>div {
+    padding-left: 10px;
+}
+.nickName {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    margin: 5px 0px;
+}
+
+.icon {
+    margin: 5px 0px;
+}
+.icon>a {
+    margin-right: 8px;  
+}
+.icon img {
+    width: 18px;
+    height: 18px;
+   
+}
+.credit {
+    margin: 5px 0px;
+    font-size: 16px;
+    color: beige;
+}
+.credit>* {
+    width: 18px;
+    height: 18px;
+    
+    padding-right:3px;
+}
+.funcEntry {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 5px 15px 0px;
+    padding-top: 20px;
+    border-top: 1px solid #E9E9E9;
+}
+.funcEntry>a {
+    cursor: pointer;
+    text-decoration: none;
+    color:black;
+    width: 3em;
+    height: 3em;
+    position: relative;
+}
+.receiveMsg::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    background: red;
+    border-radius: 50%;
+    top: 0;
+    right: -10%;
+}
+.funcEntry img {
+    width: inherit;
+    height: inherit;
+}
+.btns {
+    margin: 20px 0px;
+}
+.btns>* {
+    display: block;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 10px 20px;
+    text-align: center;background: #e82618;
+    cursor: pointer;
+}
+
+
+
+/* .portrait {
+    width: 9em;
+    height: 9em;
+    padding: 1em;
+    border-right: 1px solid #d6dde2;
+}
+.portrait>img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: transform 0.25s ease-in-out;
+}
+.root:hover>.portrait>img{
+    transform: scale(1.15);
+}
+.root>div:nth-child(2) {
+    padding: 1em;
+}
+.nickName {
+    font-size: 20px;
+    font-weight: bold;
+}
+.nickName>img {
+    margin-left: 5px;
+    width: 14px;
+}
+.nickName>img:nth-child(2) {
+    margin-left: 10px;
+} */
+/*
+.nickName>i:nth-child(3) {
+
+}
+.nickName>i:nth-child(4) {
+
+} */
+/* .basicInform {
+    padding: 0.8em 0em 0.8em;
+    font-size: 14px;
+    color: #727475;
+}
+.basicInform>span {
+    margin: 5px;
+}
+.otherInform {
+    padding: 0.7em 0em;
+    border-top: 1px solid #d6dde2;
+}
+.otherInform>label {
+    font-size: 15px;
+    color: #363636;
+}
+blockquote.basicInform {
+    text-indent: 2em;
+}
+.like {
+
+}
+.contact {
+
+} */

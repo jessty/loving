@@ -1,0 +1,63 @@
+.root {
+}
+.rootFixed {
+    list-style: none;
+    overflow: hidden;
+}
+.img {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px dashed rgb(185, 186, 187);
+}
+.imgFixed {
+    float: left;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.imgFixed>img {
+    width: inherit;
+}
+.imgBlur {
+    filter: blur(3px);
+}
+.imgCover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.uploadBtn {
+    float: left;
+    position: relative;
+    cursor: pointer;
+}
+.uploadBtn::after, .uploadBtn::before {
+    content: '';
+    position: absolute;
+    width: 30px;
+    border: 2px solid;
+    border-color: inherit;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+.uploadBtn::before {
+    transform: translate(-50%, -50%) rotateZ(90deg);
+}
+.uploadBtn>input {
+    width: inherit;
+    height: inherit;
+    opacity: 0;
+}
