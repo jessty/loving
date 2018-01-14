@@ -5,112 +5,100 @@ import * as css from './centerCard.m.css';
 import { Link } from '@dojo/routing/Link';
 import { MY_TABS, getLinkUrl } from './../../pages/center/Center';
 
-export interface VisitingCardProp {
-    name?: string;
+export interface CenterCardData {
+    id?: string;
+    headImgUrl?: string;
+    nickName?: string;
+    // age: number;
+    // height: number;
+    // edu: string;
+    // salary: string;
+    // job: string;
+    // quote: string;
+    isVip?: boolean;
+    hasPhone?: boolean;
+    hasEmail?: boolean;
+    identified?: boolean;
+    arrived?: boolean;
+    credits?: number;
+    beans: number;
 }
+export interface CenterCardProp {
+    centerCardData: CenterCardData;
+    arrive: () => void;
 
-
+}
 @theme(css)
-export default class  VisitingCard extends ThemedMixin(WidgetBase) {
-    private _headImgUrl: string = './../../assets/pic1.jpg';
-    private _id: string = '12345';
-    private _nickName: string = '明星';
-    // private _age: number = 22;
-    // private _height: number = 175;
-    // private _edu: string = 'hello';
-    // private _salary: string = '9000-15000';
-    // private _job: string = 'hello';
-    // private _quote: string = 'hello';
-    private _isVip: boolean = true;
-    private _hasPhone: boolean = true;
-    private _hasEmail: boolean = true;
-    private _identified: boolean = true;
-    private _arrived: boolean = true;
-    private _credits: number = 9999;
+export default class  CenterCard extends ThemedMixin(WidgetBase)<CenterCardProp> {
+
     private _baseImgUrl: string = './../../assets/';
     private _baseCenterUrl: string = '#/center/$1?id=$2';
     private _baseSettingsUrl: string = '#/settings';
-    private _baseVipUrl: string = '#/vip/$2';
-    
-    
+    private _baseVipUrl: string = '#/vip';
+
     constructor(parameters: any) {
         super();
     }
-    private _arrive(event: MouseEvent) {
 
+    private _arrive(event: MouseEvent) {
+        let {
+            arrive
+        } = this.properties;
+        arrive();
     }
+
+    private _writeMood(event: MouseEvent) {
+        
+    }
+
     protected render() {
+        console.log('centerCard', this.properties);
+        let {
+            id,
+            headImgUrl,
+            nickName,
+            isVip,
+            hasPhone,
+            hasEmail,
+            identified,
+            arrived,
+            credits,
+            beans,
+        } = this.properties.centerCardData;
+
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
                 <div classes={css.inform}>
-                    <Link to={getLinkUrl(this._baseCenterUrl, MY_TABS.MOOD, this._id)} isOutlet={false}><img src={this._headImgUrl}/></Link>
+                    <Link to={getLinkUrl(this._baseCenterUrl, MY_TABS.MOOD, id)} isOutlet={false}><img src={headImgUrl}/></Link>
                     <div>
                         <h3>
-                            <Link classes={css.nickName} to={getLinkUrl(this._baseCenterUrl, MY_TABS.MOOD, this._id)} isOutlet={false}>{this._nickName}</Link>
+                            <Link classes={css.nickName} to={getLinkUrl(this._baseCenterUrl, MY_TABS.MOOD, id)} isOutlet={false}>{nickName}</Link>
                         </h3>
                         <div classes={css.icon}>
-                            <Link key='vip' to={this._baseVipUrl} isOutlet={false}><img src={this._baseImgUrl+(this._isVip?'vip.png':'notvip.png')}/></Link>
-                            <Link key='identity' to={this._baseSettingsUrl}  isOutlet={false}><img src={this._baseImgUrl + (this._identified?'identity.png':'notidentity.png')}/></Link>
-                            <Link key='phone' to={this._baseSettingsUrl} isOutlet={false}><img src={this._baseImgUrl+(this._hasPhone?'phone.png':'notphone.png')}/></Link>
-                            <Link key='email' to={this._baseSettingsUrl} isOutlet={false}><img src={this._baseImgUrl+(this._hasEmail?'email.png':'notemail.png')}/></Link>
+                            <Link title='vip' key='vip' to={this._baseVipUrl} isOutlet={false}><img src={this._baseImgUrl+(isVip?'vip.png':'notvip.png')}/></Link>
+                            <Link title='实名认证' key='identity' to={this._baseSettingsUrl}  isOutlet={false}><img src={this._baseImgUrl + (identified?'identity.png':'notidentity.png')}/></Link>
+                            <Link title='手机认证' key='phone' to={this._baseSettingsUrl} isOutlet={false}><img src={this._baseImgUrl+(hasPhone?'phone.png':'notphone.png')}/></Link>
+                            <Link title='邮箱认证' key='email' to={this._baseSettingsUrl} isOutlet={false}><img src={this._baseImgUrl+(hasEmail?'email.png':'notemail.png')}/></Link>
                         </div>
                         <div classes={css.credit}>
-                            <img src={this._baseImgUrl + 'vip.png'}/>
-                            <span>{this._credits+''}</span>|
-                            <img src={this._baseImgUrl + 'vip.png'}/>
-                            <span>{this._credits+''}</span>
+                            <Link title='积分金豆' key='credit' to={'#/center/' + MY_TABS.CREDIT} params={{id: id}} isOutlet={false}>
+                                <img src={this._baseImgUrl + 'vip.png'}/>
+                                <span>{credits + ''}</span>|
+                                <img src={this._baseImgUrl + 'vip.png'}/>
+                                <span>{beans + ''}</span>
+                            </Link>
                         </div>
                     </div>
                 </div>
                 <div classes={css.funcEntry}>
-                    <a title='发表心情'><img src={this._baseImgUrl+'edit.png'}/></a>
-                    <Link classes={css.receiveMsg} title='所获喜欢' key='like' to={getLinkUrl('#/center/', MY_TABS.EMAIL)} params={{id: this._id}} isOutlet={false}><img src={this._baseImgUrl+'tolike.png'}/></Link>
-                    <Link classes={css.receiveMsg} title='查看邮件' key='email' to={getLinkUrl('#/center/', MY_TABS.EMAIL)} params={{id: this._id}} isOutlet={false}><img src={this._baseImgUrl+'notemail.png'}/></Link>
+                    <a title='发表心情' onclick={this._writeMood}><img src={this._baseImgUrl+'edit.png'}/></a>
+                    <Link classes={css.receiveMsg} title='所获喜欢' key='like' to={'#/center/' + MY_TABS.EMAIL} params={{id: id}} isOutlet={false}><img src={this._baseImgUrl+'tolike.png'}/></Link>
+                    <Link classes={css.receiveMsg} title='查看邮件' key='email' to={'#/center/' + MY_TABS.EMAIL} params={{id: id}} isOutlet={false}><img src={this._baseImgUrl+'notemail.png'}/></Link>
                 </div>
                 <div classes={css.btns}>
-                    <a onclick={this._arrive}>{this._arrived?'今日已签到':'签到'}</a>
-                    <Link key='setVip' to={this._baseVipUrl} isOutlet={false}>{this._isVip?'vip续费':'开通vip'}</Link>
+                    <a classes={arrived ? css.arrived : ''} onclick={this._arrive}>{arrived?'今日已签到':'签到'}</a>
+                    <Link key='setVip' to={this._baseVipUrl} isOutlet={false}>{isVip?'vip续费':'开通vip'}</Link>
                 </div>
-                
-                {/* <div classes={css.portrait}><img src={this._headImgUrl}/></div>
-                <div>
-                    <h3 classes={css.nickName}>
-                        <span>{this._nickName}</span>
-                        <img src={this._baseImgUrl + (this._isVip ? '' : 'not') + 'vip.png'}/>
-                        <img src={this._baseImgUrl + (this._identified ? '' : 'not') + 'identity.png'}/>
-                        <img src={this._baseImgUrl + (this._hasPhone ? '' : 'not') + 'phone.png'}/>
-                    </h3>
-                    <p classes={css.basicInform}>
-                        <span>{this._age + '岁'}</span>|
-                        <span>{this._height + 'cm'}</span>|
-                        <span>{this._edu}</span>|
-                        <span>{this._salary}</span>|
-                        <span>{this._job}</span>
-                    </p>
-                    
-                    {this._quote ? (
-                        <div classes={css.otherInform}>
-                            <label>内心独白：</label>
-                            <blockquote classes={css.basicInform}>
-                                {this._quote}
-                            </blockquote>
-                        </div>
-                        ) : (
-                        <div classes={css.otherInform}>
-                            <label>希望你：</label>
-                            <p classes={css.basicInform}>
-                                <span>{this._age + ''}</span>|
-                                <span>{this._height + 'cm'}</span>|
-                                <span>{this._edu}</span>|
-                                <span>{this._salary}</span>|
-                                <span>{this._job}</span>
-                            </p>
-                        </div>
-                        )
-                    }
-                </div>
-                <span classes={css.like}></span>
-                <span classes={css.contact}></span> */}
             </div>
         );
     }

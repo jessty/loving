@@ -8,6 +8,8 @@ import CenterDesc from './../../widgets/centerDesc/CenterDesc';
 import MoodCard from './../../widgets/moodCard/MoodCard';
 import MyActivity from './../../widgets/myActivity/MyActivity';
 import Upload from './../../widgets/upload/Upload';
+import { basicInformTable } from './../../support/workerData';
+
 
 export interface CenterProp {
     id: string;
@@ -155,7 +157,7 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
                     <div classes={css.inform} key='myInform'>
                         <label for={'inform' + i}>{inform.title}</label>
                         <input type='radio' name='inform' checked={i === 0} id={'inform' + i}/>
-                        <InformBlock extraClasses={{'root': css.informBlock}} initState={initState} fields={inform.fields} editable={editable} readable={readable}></InformBlock>
+                        <InformBlock extraClasses={{'root': css.informBlock}} initState={initState} fields={basicInformTable} editable={editable} readable={readable}></InformBlock>
                     </div>
                 );
             }) : null

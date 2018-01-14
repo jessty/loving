@@ -7,3 +7,4 @@ export const credit: string;
 export const funcEntry: string;
 export const receiveMsg: string;
 export const btns: string;
+export const arrived: string;

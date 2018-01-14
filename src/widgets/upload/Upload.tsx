@@ -2,9 +2,6 @@ import { WidgetBase } from '@dojo/widget-core/WidgetBase';
 import { ThemedMixin, theme } from '@dojo/widget-core/mixins/Themed';
 import { tsx } from '@dojo/widget-core//tsx';
 import * as css from './upload.m.css';
-import afterRender from "@dojo/widget-core/decorators/afterRender";
-import beforeRender from "@dojo/widget-core/decorators/afterRender";
-import beforeProperties from "@dojo/widget-core/decorators/afterRender";
 // import afterRender from "@dojo/widget-core/decorators/afterRender";
 import axois from 'axios';
 

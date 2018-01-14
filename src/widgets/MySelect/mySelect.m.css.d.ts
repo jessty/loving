@@ -4,3 +4,4 @@ export const result: string;
 export const choises: string;
 export const downBtn: string;
 export const choisesPane: string;
+export const showChoisesPane: string;

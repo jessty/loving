@@ -13,6 +13,9 @@
     position: relative;
     border-radius: var(--input-radius);
 }
+.rootFixed:focus {
+    outline: none;
+}
 .result, .choises {
     display: inline-block;
     width: 100%;
@@ -40,16 +43,28 @@
 }
 
 .choisesPane {
+    z-index: 1;
     position: absolute;
     width: 100%;
-    border-bottom: 1px solid #d6dde2;
-    border-left: 1px solid #d6dde2;
-    border-right: 1px solid #d6dde2;
+    border-bottom: 1px solid #4cace3;
+    border-left: 1px solid #4cace3;
+    border-right: 1px solid #4cace3;
+    border-radius: 3px;
     top: calc( 100% + 1px );
     left: -1px;
     max-height: 6em;
     overflow-y: auto;
     background-color: white;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: all 0.5s ease-in-out;
+}
+.showChoisesPane {
+    background: white;
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0%);
 }
 .choises {
     height: 2em;

@@ -15,19 +15,20 @@ export const routeConfig = [
 				]
 			},
 			{
-				path: 'center/{tab}?{id}',
-				outlet: 'center',
-				children: [
-					
-				]
-			},
-			{
 				path: 'center/{tab}',
 				outlet: 'center',
 				children: [
 					
 				]
 			},
+			{
+				path: 'center/{tab}?{id}',
+				outlet: 'center',
+				children: [
+					
+				]
+			},
+			
 			{
 				path: 'center',
 				outlet: 'center',
