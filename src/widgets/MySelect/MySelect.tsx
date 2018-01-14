@@ -4,21 +4,21 @@ import { tsx } from '@dojo/widget-core//tsx';
 import * as css from './mySelect.m.css';
 
 export interface MySelectProp {
-    value?: any;
-    choises: Array<LabelValue>;
+    value?: number;
+    choises: Array<string>;
     onChange?(value: any, key?: string): void;
     onFocus?(): void;
     onBlur?(): void;
     disabled?: boolean;
 }
-export interface LabelValue {
-    label: string;
-    value: any;
-}
+// export interface LabelValue {
+//     label: string;
+//     value: any;
+// }
 @theme(css)
 export default class MySelect extends ThemedMixin(WidgetBase)<MySelectProp> {
     private _isDown: Boolean = false;
-    private _selectedChoise: LabelValue = { label: '未选', value: ''};
+    private _selectedChoise: string = '未选';
     // private _renderChoisesPane() {
     //     let { choises } = this.properties;
     //     console.log('choises', choises);
@@ -44,7 +44,7 @@ export default class MySelect extends ThemedMixin(WidgetBase)<MySelectProp> {
         if(this._selectedChoise !== choises[i]) {
             this._selectedChoise = choises[i];
             
-            onChange  ? onChange(this._selectedChoise.value) : null;
+            onChange  ? onChange(i) : null;
         }
         this._isDown = ! this._isDown;
         this.invalidate();
@@ -65,13 +65,12 @@ export default class MySelect extends ThemedMixin(WidgetBase)<MySelectProp> {
         let { choises } = this.properties;
         return (
             <div tabIndex={0} classes={[this.theme(css.rootFixed), css.root]} onblur={this._closeChoisesPane}>
-                <span classes={css.result}>{this._selectedChoise.label}</span>
-                <i classes={css.downBtn} onclick={() => {this._clickDownBtn();}}></i>
+                <span classes={css.result}>{this._selectedChoise}</span>
+                <i classes={css.downBtn} onclick={() => {this._clickDownBtn()}}></i>
                 <div classes={[css.choisesPane, this._isDown ? css.showChoisesPane : '']} onclick={this._clickChoisesPane}>
                     {choises ? choises.map((choise, i) => {
-                        return <span data-select-index={i + ''} classes={css.choises}>{choise.label}</span>;
-                        }
-                    ) : null}
+                        return <span data-select-index={i + ''} classes={css.choises}>{choise}</span>;
+                    }) : null}
                 </div>
             </div>
         );

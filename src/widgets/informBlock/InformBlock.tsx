@@ -12,7 +12,7 @@ import MySelect from './../mySelect/MySelect';
 
 
 export interface informBlockProp {
-    fields?: Array<any>;
+    fields?: Object;
     informs?: any;
     onSubmit?(): void;
     onCancel?(): void;
@@ -46,70 +46,94 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         onCancel ? onCancel() : null;
         this._readable ? this._toggleState() : null;
     }
-    private _renderSelect(selectField: any, i: number) {
+    private _renderSelect(selectField: any, key: string) {
         return (
-            <div classes={css.field} key={'select' + i}>
+            <div classes={css.field} key={'select-' + key}>
                 <label classes={css.fieldLabel}>{selectField.label}</label>
                 {this._isEditing ?
                     <MySelect choises={selectField.choises}></MySelect> :
-                    <span classes={css.fieldResult}>{selectField.result.label}</span>
+                    <span classes={css.fieldResult}>
+                        {selectField.value !== undefined && selectField.value !== '' ? selectField.choises[selectField.value] : '未选'}
+                    </span>
                 }
             </div>
         );
     }
-    private _renderTextInput(textInputField: any, i: number) {
+    private _renderTextInput(textInputField: any, key: string) {
         return (
-            <div classes={css.field} key={'textInput' + i}>
+            <div classes={css.field} key={'textInput-' + key}>
                 <label classes={css.fieldLabel}>{textInputField.label}</label>
                 {this._isEditing ?
                     <input value={textInputField.value}/> :
-                    <span classes={css.fieldResult}>{textInputField.value}</span>
+                    <span classes={css.fieldResult}>{textInputField.value + ''}</span>
                 }
             </div>
         );
     }
-    private _renderTextArea(textAreaField: any, i: number) {
+    private _renderTextArea(textAreaField: any, key: string) {
         return (
-            <div classes={[css.field, css.textareField, (this._isEditing ? null : css.fixTextarea)]} key={'textArea' + i}>
+            <div classes={[css.field, css.textareField, (this._isEditing ? null : css.fixTextarea)]} key={'textArea-' + key}>
                 <label classes={css.fieldLabel}>{textAreaField.label}</label>
                 {this._isEditing ?
                     <textarea value={textAreaField.value}></textarea> :
-                    <span classes={css.fieldResult}>{textAreaField.value}</span>
+                    <span classes={css.fieldResult}>{textAreaField.value + ''}</span>
                 }
             </div>
         );
     }
     private _renderEditState() {
+        let fieldNodes = [];
+        let fields = this._fields;
 
-        let fieldNodes: Array<any> =  this._fields ? this._fields.map((field: any, i: number) => {
-            switch ( field.type ) {
-                case 'textinput': return this._renderTextInput(field, i);
-                case 'textarea': return this._renderTextArea(field, i);
-                case 'select': return this._renderSelect(field, i);
+        for(let key in fields) {
+            switch ( fields[key].type ) {
+                case 'textinput': fieldNodes.push(this._renderTextInput(fields[key], key)); break;
+                case 'textarea': fieldNodes.push(this._renderTextArea(fields[key], key)); break;
+                case 'select': fieldNodes.push(this._renderSelect(fields[key], key)); break;
             }
-        }) : [];
+        }
+        // let fieldNodes: Array<any> =  this._fields ? this._fields.map((field: any, i: number) => {
+        //     switch ( field.type ) {
+        //         case 'textinput': return this._renderTextInput(field, i);
+        //         case 'textarea': return this._renderTextArea(field, i);
+        //         case 'select': return this._renderSelect(field, i);
+        //     }
+        // }) : [];
 
         let btnField = (
             <div classes={[css.field, css.btnField]} key='btnField'>
                 <Button onClick={this._onSubmitClick} extraClasses={{'root': css.btn}}>提交</Button>
                 {this._readable ? <Button onClick={this._onCancelClick} extraClasses={{'root': css.btn}}>取消</Button> : null}
             </div>);
-        
+
         return [...fieldNodes, btnField];
 
     }
     private _renderReadState() {
         let nodes: Array<any> = [];
+
         this._editable ? nodes[0] = (<span classes={css.editIcon} onclick={this._toggleState}></span>) : null;
 
-        let fieldNodes = this._fields ? this._fields.map((field: any, i: number) => {
-            switch ( field.type ) {
-                case 'textinput': return this._renderTextInput(field, i);
-                case 'textarea': return this._renderTextArea(field, i);
-                case 'select': return this._renderSelect(field, i);
+        let fieldNodes = [];
+        let fields = this._fields;
+
+        for(let key in fields) {
+            switch ( fields[key].type ) {
+                case 'textinput': fieldNodes.push(this._renderTextInput(fields[key], key)); break;
+                case 'textarea': fieldNodes.push(this._renderTextArea(fields[key], key)); break;
+                case 'select': fieldNodes.push(this._renderSelect(fields[key], key)); break;
             }
-        }) : null;
+        }
+
         return [...nodes, ...fieldNodes];
+        // let fieldNodes = this._fields ? this._fields.map((field: any, i: number) => {
+        //     switch ( field.type ) {
+        //         case 'textinput': return this._renderTextInput(field, i);
+        //         case 'textarea': return this._renderTextArea(field, i);
+        //         case 'select': return this._renderSelect(field, i);
+        //     }
+        // }) : null;
+        // return [...nodes, ...fieldNodes];
     }
     private _initWidget() {
         let {readable, editable, initState, fields} = this.properties;
@@ -125,6 +149,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         this._isEditing = (initState === 'edit');
         this._fields = fields;
         this._initiated = true;
+        console.log('fields', fields);
     }
     protected render() {
         this._initiated ? null : this._initWidget();
