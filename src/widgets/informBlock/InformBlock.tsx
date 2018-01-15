@@ -12,7 +12,8 @@ import MySelect from './../mySelect/MySelect';
 
 
 export interface informBlockProp {
-    fields?: Object;
+    fields: Object;
+    initData?: Object;
     informs?: any;
     onSubmit?(): void;
     onCancel?(): void;
@@ -29,6 +30,11 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
     private _editable: Boolean;
     private _fields: any;
     private _initiated: Boolean;
+    private _values: any = {};
+    private _filedChange(key: string, value: any) {
+        this._values[key] = value;
+        this._fields[key].value = value;
+    }
 
     private _toggleState() {
         this._isEditing = !this._isEditing;
@@ -47,12 +53,13 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         this._readable ? this._toggleState() : null;
     }
     private _renderSelect(selectField: any, key: string) {
+        console.log('selectField', selectField);
         return (
             <div classes={css.field} key={'select-' + key}>
                 <label classes={css.fieldLabel}>{selectField.label}</label>
                 {this._isEditing ?
-                    <MySelect choises={selectField.choises}></MySelect> :
-                    <span classes={css.fieldResult}>
+                    <MySelect choises={selectField.choises} initValue={selectField.value} onChange={this._filedChange.bind(this, key)}></MySelect> :
+                    <span key={'select-result-' + key} classes={css.fieldResult}>
                         {selectField.value !== undefined && selectField.value !== '' ? selectField.choises[selectField.value] : '未选'}
                     </span>
                 }
@@ -64,7 +71,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
             <div classes={css.field} key={'textInput-' + key}>
                 <label classes={css.fieldLabel}>{textInputField.label}</label>
                 {this._isEditing ?
-                    <input value={textInputField.value}/> :
+                    <input value={textInputField.value} onchange={({target:{value}}) => {this._filedChange(key, value);}}/> :
                     <span classes={css.fieldResult}>{textInputField.value + ''}</span>
                 }
             </div>
@@ -75,7 +82,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
             <div classes={[css.field, css.textareField, (this._isEditing ? null : css.fixTextarea)]} key={'textArea-' + key}>
                 <label classes={css.fieldLabel}>{textAreaField.label}</label>
                 {this._isEditing ?
-                    <textarea value={textAreaField.value}></textarea> :
+                    <textarea value={textAreaField.value} onchange={({target:{value}}) => {this._filedChange(key, value);}}></textarea> :
                     <span classes={css.fieldResult}>{textAreaField.value + ''}</span>
                 }
             </div>
@@ -84,7 +91,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
     private _renderEditState() {
         let fieldNodes = [];
         let fields = this._fields;
-
+        console.log('inform fields2', this._fields);
         for(let key in fields) {
             switch ( fields[key].type ) {
                 case 'textinput': fieldNodes.push(this._renderTextInput(fields[key], key)); break;
@@ -100,13 +107,13 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         //     }
         // }) : [];
 
-        let btnField = (
-            <div classes={[css.field, css.btnField]} key='btnField'>
-                <Button onClick={this._onSubmitClick} extraClasses={{'root': css.btn}}>提交</Button>
-                {this._readable ? <Button onClick={this._onCancelClick} extraClasses={{'root': css.btn}}>取消</Button> : null}
-            </div>);
+        // let btnField = (
+        //     <div classes={[css.field, css.btnField]} key='btnField'>
+        //         <Button onClick={this._onSubmitClick} extraClasses={{'root': css.btn}}>提交</Button>
+        //         {this._readable ? <Button onClick={this._onCancelClick} extraClasses={{'root': css.btn}}>取消</Button> : null}
+        //     </div>);
 
-        return [...fieldNodes, btnField];
+        return [...fieldNodes];
 
     }
     private _renderReadState() {
@@ -136,7 +143,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         // return [...nodes, ...fieldNodes];
     }
     private _initWidget() {
-        let {readable, editable, initState, fields} = this.properties;
+        let {readable, editable, initState, initData, fields} = this.properties;
         if (!(readable || editable)) {
             throw Error('Property Error: editable and readable can not be passed as \'false\' at the same time!');
         }else if(initState === 'edit' && !editable) {
@@ -147,15 +154,26 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         this._readable = readable;
         this._editable = editable;
         this._isEditing = (initState === 'edit');
+        
         this._fields = fields;
         this._initiated = true;
-        console.log('fields', fields);
+        if (initData) {
+            for (let p in initData) {
+                this._fields[p].value = initData[p];
+            }
+        }
+        
+        console.log('inform fields1', this._fields);
     }
     protected render() {
         this._initiated ? null : this._initWidget();
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
                 {this._isEditing ? this._renderEditState() : this._renderReadState()}
+                <div classes={[css.field, css.btnField, this._isEditing ? '' : css.hiddenBtns]} key='btnField'>
+                    <Button onClick={this._onSubmitClick} extraClasses={{'root': css.btn}}>提交</Button>
+                    {this._readable ? <Button onClick={this._onCancelClick} extraClasses={{'root': css.btn}}>取消</Button> : null}
+                </div>
             </div>
         );
     }

@@ -18,10 +18,10 @@
     cursor: pointer;
 }
 .field {
-    margin: 0.2em
+    margin: 0.1em
 }
 .fieldLabel {
-    padding:0.5em 0em;
+    padding:0.7em 0em;
     color: #5e5e5e;
     text-align: right;
     display: inline-block;
@@ -71,4 +71,8 @@
     padding-left: 1em!important;
     padding-right: 1em!important;
     border-radius: var(--input-radius);
+}
+.hiddenBtns {
+    opacity: 0;
+    pointer-events: none;
 }

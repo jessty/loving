@@ -4,7 +4,7 @@ import { tsx } from '@dojo/widget-core//tsx';
 import * as css from './mySelect.m.css';
 
 export interface MySelectProp {
-    value?: number;
+    initValue?: number;
     choises: Array<string>;
     onChange?(value: any, key?: string): void;
     onFocus?(): void;
@@ -18,7 +18,9 @@ export interface MySelectProp {
 @theme(css)
 export default class MySelect extends ThemedMixin(WidgetBase)<MySelectProp> {
     private _isDown: Boolean = false;
-    private _selectedChoise: string = '未选';
+    private _value: number|undefined;
+    private _selectedChoise: string;
+    private _initiated: boolean;
     // private _renderChoisesPane() {
     //     let { choises } = this.properties;
     //     console.log('choises', choises);
@@ -41,9 +43,9 @@ export default class MySelect extends ThemedMixin(WidgetBase)<MySelectProp> {
         let i = +(target.dataset.selectIndex);
         console.log('choise', target.dataset.selectIndex, choises[i]);
         
-        if(this._selectedChoise !== choises[i]) {
+        if(this._value !== i) {
+            this._value = i;
             this._selectedChoise = choises[i];
-            
             onChange  ? onChange(i) : null;
         }
         this._isDown = ! this._isDown;
@@ -52,6 +54,20 @@ export default class MySelect extends ThemedMixin(WidgetBase)<MySelectProp> {
     protected _clickDownBtn() {
         this._isDown = !this._isDown;
         this.invalidate();
+    }
+    private _init() {
+        this._initiated = true;
+        let {
+            initValue,
+            choises
+        } = this.properties;
+
+        if (initValue !== undefined) {
+            this._selectedChoise = choises[initValue];
+        } else {
+            this._selectedChoise = '未选';
+        }
+        this._value = initValue;
     }
     protected render() {
         // let {
@@ -62,7 +78,10 @@ export default class MySelect extends ThemedMixin(WidgetBase)<MySelectProp> {
         //     onBlur,
         //     disabled
         // } = this.properties;
+        this._initiated ? null : this._init();
+        console.log('value', this._value, 'choise', this._selectedChoise);
         let { choises } = this.properties;
+
         return (
             <div tabIndex={0} classes={[this.theme(css.rootFixed), css.root]} onblur={this._closeChoisesPane}>
                 <span classes={css.result}>{this._selectedChoise}</span>

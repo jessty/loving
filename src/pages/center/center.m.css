@@ -71,7 +71,7 @@
 }
 .inform input:checked + div{
     /* display: block; */
-    height: 350px;
+    height: initial;
 }
 .inform input + div{
     /* display: none; */
@@ -80,7 +80,7 @@
     transition: height 0.3s ease-in-out;
 }
 .informBlock {
-    margin: 2em 0em 0em 2em;
+    margin: 1em 14em 1em 10em;
 }
 
 .moods {

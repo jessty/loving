@@ -6,6 +6,7 @@ import * as css from './login.m.css';
 import { tsx } from '@dojo/widget-core//tsx';
 import InformBlock from './../../widgets/informBlock/InformBlock';
 import Upload from './../../widgets/upload/Upload';
+import { basicInformTable } from './../../support/workerData';
 
 export interface LoginProp {
     
@@ -164,8 +165,8 @@ export default class Login extends LoginBase<LoginProp> {
                     </div>
                 </div>
                 <div classes={[css.block, ...this._animateSecond()]}>
-                    <h3>请填写基本资料</h3>
-                    <InformBlock extraClasses={{'root': css.informBlock}} initState='edit' editable={true} readable={false} fields={this._fields} onSubmit={this._animateForword.bind(this)} onCancel={this._animateBack.bind(this)}></InformBlock>
+                    <h3>请填写{basicInformTable.title}</h3>
+                    <InformBlock extraClasses={{'root': css.informBlock}} initState='edit' editable={true} readable={false} fields={basicInformTable.fields} onSubmit={this._animateForword.bind(this)} onCancel={this._animateBack.bind(this)}></InformBlock>
                 </div>
                 <div classes={[css.block, ...this._animateThird()]}>
                     <h3>实名认证</h3>

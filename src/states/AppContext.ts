@@ -9,6 +9,7 @@ export default class HomeContext extends Injector {
 
     private _visitingCardsData: VisitingCardData[];
     private _centerCardData: CenterCardData;
+    private _basicInformData: Object;
 
 	constructor() {
 
@@ -46,7 +47,19 @@ export default class HomeContext extends Injector {
             credits: 9999,
             beans: 1000,
         }
-
+        let basicInformData = {
+            nickName: 'star',
+            marital_status: 0,
+            purpose: undefined,
+            gender: undefined,
+            birthday: '2018/1/14',
+            weight: 175,
+            height: 175,
+            education: 2,
+            salary: 2,
+            livingplace: '广东广州'
+        };
+        this._basicInformData = basicInformData;
         this._visitingCardsData = [visitingCardData, visitingCardData, visitingCardData];
         this._centerCardData = centerCardData;
 	}
@@ -80,6 +93,10 @@ export default class HomeContext extends Injector {
         // axois.post();
         this.emit({ type: 'invalidate' });
 	}
+
+    get basicInformData(): Object {
+        return this._basicInformData;
+    }
 
 	get(): HomeContext {
 		return this;

@@ -8,12 +8,15 @@ import CenterDesc from './../../widgets/centerDesc/CenterDesc';
 import MoodCard from './../../widgets/moodCard/MoodCard';
 import MyActivity from './../../widgets/myActivity/MyActivity';
 import Upload from './../../widgets/upload/Upload';
-import { basicInformTable } from './../../support/workerData';
+import { allTable } from './../../support/workerData';
 
 
 export interface CenterProp {
     id: string;
     tab: string;
+    myInform: {
+        basicInformData: Object;
+    }
 }
 export const MY_TABS = {
     MOOD: 'myMood',
@@ -41,91 +44,91 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
     //     credit: 'myCredits'
     // }
     private _baseURL = '#/center/$0?id=$1';
-    private _informBlockProp: informBlockProp = {
-        initState:'edit',
-        editable:true,
-        readable:true,
-        informs:[
-            {
-                title:'基本资料',
-                fields:[
-                    {
-                        type: 'select',
-                        label: '姓名：',
-                        result: {
-                            label: 'foo',
-                            value: '11'
-                        },
-                        choises: [
-                            {
-                                label: 'foo',
-                                value: '11'
-                            },
-                            {
-                                label: 'boo',
-                                value: '22'
-                            },
-                            {
-                                label: 'baz',
-                                value: '33'
-                            }
-                        ]
-                    },
-                    {
-                        type: 'textinput',
-                        label: '留言：',
-                        key: 'msg',
-                        value: 'hello!'
-                    },
-                    {
-                        type: 'textarea',
-                        label: '留言：',
-                        key: 'msg',
-                        value: 'hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：'
-                    }
-                ]
-            },
-            {
-                title:'详细资料',
-                fields:[
-                    {
-                        type: 'select',
-                        label: '姓名：',
-                        result: {
-                            label: 'foo',
-                            value: '11'
-                        },
-                        choises: [
-                            {
-                                label: 'foo',
-                                value: '11'
-                            },
-                            {
-                                label: 'boo',
-                                value: '22'
-                            },
-                            {
-                                label: 'baz',
-                                value: '33'
-                            }
-                        ]
-                    },
-                    {
-                        type: 'textinput',
-                        label: '留言：',
-                        key: 'msg',
-                        value: 'hello!'
-                    },
-                    {
-                        type: 'textarea',
-                        label: '留言：',
-                        key: 'msg',
-                        value: 'hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：'
-                    }
-                ]
-            }
-        ]
-    };
+    // private _informBlockProp: informBlockProp = {
+    //     initState:'edit',
+    //     editable:true,
+    //     readable:true,
+    //     informs:[
+    //         {
+    //             title:'基本资料',
+    //             fields:[
+    //                 {
+    //                     type: 'select',
+    //                     label: '姓名：',
+    //                     result: {
+    //                         label: 'foo',
+    //                         value: '11'
+    //                     },
+    //                     choises: [
+    //                         {
+    //                             label: 'foo',
+    //                             value: '11'
+    //                         },
+    //                         {
+    //                             label: 'boo',
+    //                             value: '22'
+    //                         },
+    //                         {
+    //                             label: 'baz',
+    //                             value: '33'
+    //                         }
+    //                     ]
+    //                 },
+    //                 {
+    //                     type: 'textinput',
+    //                     label: '留言：',
+    //                     key: 'msg',
+    //                     value: 'hello!'
+    //                 },
+    //                 {
+    //                     type: 'textarea',
+    //                     label: '留言：',
+    //                     key: 'msg',
+    //                     value: 'hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：'
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             title:'详细资料',
+    //             fields:[
+    //                 {
+    //                     type: 'select',
+    //                     label: '姓名：',
+    //                     result: {
+    //                         label: 'foo',
+    //                         value: '11'
+    //                     },
+    //                     choises: [
+    //                         {
+    //                             label: 'foo',
+    //                             value: '11'
+    //                         },
+    //                         {
+    //                             label: 'boo',
+    //                             value: '22'
+    //                         },
+    //                         {
+    //                             label: 'baz',
+    //                             value: '33'
+    //                         }
+    //                     ]
+    //                 },
+    //                 {
+    //                     type: 'textinput',
+    //                     label: '留言：',
+    //                     key: 'msg',
+    //                     value: 'hello!'
+    //                 },
+    //                 {
+    //                     type: 'textarea',
+    //                     label: '留言：',
+    //                     key: 'msg',
+    //                     value: 'hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：hello!hello!hello!hello!hello!留言：留言：留言：'
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // };
     private _renderMyActivity() {
         return (
             <div classes={css.moods}>
@@ -150,17 +153,18 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
         );
     }
     private _renderMyInform() {
-        let { informs, initState, editable, readable } = this._informBlockProp;
+        // let { informs, initState, editable, readable } = this._informBlockProp;
+        let {myInform:{basicInformData}} = this.properties;
         return (
-            informs ? informs.map((inform: any, i: number) => {
+            allTable.map((table: any, i: number) => {
                 return (
                     <div classes={css.inform} key='myInform'>
-                        <label for={'inform' + i}>{inform.title}</label>
+                        <label for={'inform' + i}>{table.title}</label>
                         <input type='radio' name='inform' checked={i === 0} id={'inform' + i}/>
-                        <InformBlock extraClasses={{'root': css.informBlock}} initState={initState} fields={basicInformTable} editable={editable} readable={readable}></InformBlock>
+                        <InformBlock extraClasses={{'root': css.informBlock}} initState={'read'} initData={basicInformData} fields={table.fields} editable={true} readable={true}></InformBlock>
                     </div>
                 );
-            }) : null
+            })
         );
     }
     protected renderTab() {
