@@ -8,7 +8,7 @@ import CenterDesc from './../../widgets/centerDesc/CenterDesc';
 import MoodCard from './../../widgets/moodCard/MoodCard';
 import MyActivity from './../../widgets/myActivity/MyActivity';
 import Upload from './../../widgets/upload/Upload';
-import { allTable } from './../../support/workerData';
+import { allTable } from './../../support/informTables';
 
 
 export interface CenterProp {
@@ -161,7 +161,7 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
                     <div classes={css.inform} key='myInform'>
                         <label for={'inform' + i}>{table.title}</label>
                         <input type='radio' name='inform' checked={i === 0} id={'inform' + i}/>
-                        <InformBlock extraClasses={{'root': css.informBlock}} initState={'read'} initData={basicInformData} fields={table.fields} editable={true} readable={true}></InformBlock>
+                        <InformBlock extraClasses={{'root': css.informBlock}} initState={'read'} fields={table.fields} editable={true} readable={true}></InformBlock>
                     </div>
                 );
             })
@@ -198,7 +198,7 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
                         <Link classes={[css.link, (tab === MY_TABS.INFORM ? css.activeLink : '')]} key={MY_TABS.INFORM} to={getLinkUrl(this._baseURL, MY_TABS.INFORM, id)} isOutlet={false}>我的资料</Link>
                         {this._belongToLogger ? (this._showPrivateNav(tab, id)) : null }
                     </nav>
-                    <section>
+                    <section classes={css.myContent}>
                         {this.renderTab()}
                     </section>
                 </div>

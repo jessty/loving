@@ -49,6 +49,9 @@
     left:0px;
     width: 100%;
 }
+.myContent {
+    overflow: hidden;
+}
 /* inform Tab */
 .inform:first-child{
     margin-top: 2em;
@@ -72,10 +75,14 @@
 .inform input:checked + div{
     /* display: block; */
     height: initial;
+    opacity: 1;
+    pointer-events: auto;
 }
 .inform input + div{
     /* display: none; */
-    overflow: hidden;
+    /* overflow: hidden; */
+    opacity: 0;
+    pointer-events: none;
     height: 0px;
     transition: height 0.3s ease-in-out;
 }
