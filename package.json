@@ -10,10 +10,11 @@
     "@dojo/shim": "~0.2.2",
     "@dojo/widget-core": "~0.3.0",
     "@dojo/widgets": "~0.2.1",
+    "animate.css": "^3.5.2",
+    "axios": "^0.17.1",
     "dijit": "^1.13.0",
     "dojo": "^1.13.0",
-    "dojo-themes": "^1.13.0",
-    "axios": "^0.17.1"
+    "dojo-themes": "^1.13.0"
   },
   "devDependencies": {
     "@dojo/cli-build-webpack": "~0.2.0",

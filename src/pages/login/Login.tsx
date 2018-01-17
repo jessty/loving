@@ -6,7 +6,7 @@ import * as css from './login.m.css';
 import { tsx } from '@dojo/widget-core//tsx';
 import InformBlock from './../../widgets/informBlock/InformBlock';
 import Upload from './../../widgets/upload/Upload';
-import { basicInformTable } from './../../support/workerData';
+import { basicInformTable } from './../../support/informTables';
 
 export interface LoginProp {
     
