@@ -10,6 +10,7 @@ export default class HomeContext extends Injector {
     private _visitingCardsData: VisitingCardData[];
     private _centerCardData: CenterCardData;
     private _basicInformData: Object;
+    private _activitySwipers: Array<any>;
 
 	constructor() {
 
@@ -59,6 +60,37 @@ export default class HomeContext extends Injector {
             salary: 2,
             livingplace: '广东广州'
         };
+        let activitySwipers = [
+            {
+                clickable: false,
+                href: '/home',
+                src: './../assets/pic1.jpg',
+                alt: 'pic',
+                title: 'pic'
+            },
+            {
+                clickable: true,
+                href: '/home',
+                src: './../assets/pic1.jpg',
+                alt: 'pic',
+                title: 'pic'
+            },
+            {
+                clickable: true,
+                href: '/home',
+                src: './../assets/pic1.jpg',
+                alt: 'pic',
+                title: 'pic'
+            },
+            {
+                clickable: true,
+                href: '/home',
+                src: './../assets/pic1.jpg',
+                alt: 'pic',
+                title: 'pic'
+            }
+        ]
+        this._activitySwipers = activitySwipers;
         this._basicInformData = basicInformData;
         this._visitingCardsData = [visitingCardData, visitingCardData, visitingCardData];
         this._centerCardData = centerCardData;
@@ -96,6 +128,10 @@ export default class HomeContext extends Injector {
 
     get basicInformData(): Object {
         return this._basicInformData;
+    }
+
+    get activitySwipers(): Array<any>{
+        return this._activitySwipers;
     }
 
 	get(): HomeContext {

@@ -1,5 +1,5 @@
 import { Outlet } from '@dojo/routing/Outlet';
-import Activity from './../pages/activity/Activity';
+import ActivityContainer from './../pages/activity/ActivityContainer';
 
-export const ActivityOutlet = Outlet(Activity, 'activity');
+export const ActivityOutlet = Outlet(ActivityContainer, 'activity');
 export default ActivityOutlet;

@@ -1,0 +1,12 @@
+.root {
+    height: 400px;
+}
+
+.swiperSlide *{
+    display: inline-block;
+    height: inherit;
+    width: 100%;
+}
+.root>.swiperBtn {
+    pointer-events: auto;
+}
