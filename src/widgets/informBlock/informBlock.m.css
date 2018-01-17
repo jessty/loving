@@ -60,7 +60,7 @@
 .fixTextarea > span {
     display: inline-block;
     margin-top: 0.4em;
-    text-indent: 2em;
+    /* text-indent: 2em; */
     max-width: 56%;
 }
 .btnField {

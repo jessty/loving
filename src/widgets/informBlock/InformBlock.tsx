@@ -72,7 +72,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
                 <label classes={css.fieldLabel}>{textInputField.label}</label>
                 {this._isEditing ?
                     <input value={textInputField.value} onchange={({target:{value}}) => {this._filedChange(key, value);}}/> :
-                    <span classes={css.fieldResult}>{textInputField.value + ''}</span>
+                    <span classes={css.fieldResult}>{textInputField.value !== undefined && textInputField.value !== '' ? textInputField.value + '' : '未填写'}</span>
                 }
             </div>
         );
@@ -83,7 +83,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
                 <label classes={css.fieldLabel}>{textAreaField.label}</label>
                 {this._isEditing ?
                     <textarea value={textAreaField.value} onchange={({target:{value}}) => {this._filedChange(key, value);}}></textarea> :
-                    <span classes={css.fieldResult}>{textAreaField.value + ''}</span>
+                    <span classes={css.fieldResult}>{textAreaField.value !== undefined && textAreaField.value !== '' ? textAreaField.value + '' : '未填写'}</span>
                 }
             </div>
         );
