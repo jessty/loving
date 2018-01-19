@@ -26,7 +26,7 @@ export interface CenterCardData {
 export interface CenterCardProp {
     centerCardData: CenterCardData;
     arrive: () => void;
-
+    publishMood?: () => void;
 }
 @theme(css)
 export default class  CenterCard extends ThemedMixin(WidgetBase)<CenterCardProp> {
@@ -65,7 +65,7 @@ export default class  CenterCard extends ThemedMixin(WidgetBase)<CenterCardProp>
             credits,
             beans,
         } = this.properties.centerCardData;
-
+        let {publishMood} = this.properties;
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
                 <div classes={css.inform}>
@@ -91,7 +91,7 @@ export default class  CenterCard extends ThemedMixin(WidgetBase)<CenterCardProp>
                     </div>
                 </div>
                 <div classes={css.funcEntry}>
-                    <a title='发表心情' onclick={this._writeMood}><img src={this._baseImgUrl+'edit.png'}/></a>
+                    <a title='发表心情' onclick={this._writeMood} onclick={()=>{publishMood();}><img src={this._baseImgUrl+'edit.png'}/></a>
                     <Link classes={css.receiveMsg} title='所获喜欢' key='like' to={'#/center/' + MY_TABS.EMAIL} params={{id: id}} isOutlet={false}><img src={this._baseImgUrl+'tolike.png'}/></Link>
                     <Link classes={css.receiveMsg} title='查看邮件' key='email' to={'#/center/' + MY_TABS.EMAIL} params={{id: id}} isOutlet={false}><img src={this._baseImgUrl+'notemail.png'}/></Link>
                 </div>

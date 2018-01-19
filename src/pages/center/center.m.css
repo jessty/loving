@@ -94,3 +94,58 @@
     margin: 25px 100px 25px;
 
 }
+
+.albumsWrap{
+    list-style: none;
+}
+.album {
+    margin: 3em 0em;
+    padding: 2.5em 1.5em 1em;
+    border: 1px solid rgb(208, 208, 208);
+    border-radius: 5px;
+    position: relative;
+}
+.album > h2 {
+    position: absolute;
+    top: 0;
+    left: -0.5em;
+    font-size: 20px;
+    padding: 0.5em;
+    background: white;
+    transform: translateY(-50%);
+}
+
+.popLayer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.popLayer.showPop {
+    opacity: 1;
+    pointer-events: auto;
+}
+.popContent {
+    position: relative;
+    padding: 2em;
+    background: white;
+    border-radius: 2px;
+    width: 32em;
+}
+.closePop {
+    position: absolute;
+    padding: 7px;
+    font-size: 18px;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: rgb(185, 186, 187)；
+}

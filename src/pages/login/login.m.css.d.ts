@@ -14,3 +14,4 @@ export const textBtn: string;
 export const informBlock: string;
 export const uploadRoot: string;
 export const uploadImg: string;
+export const finishBtn: string;

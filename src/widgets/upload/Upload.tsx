@@ -8,9 +8,9 @@ import axois from 'axios';
 export interface UploadProp {
     action: string;
     initImgs?: Array<string>;
-    onceChoose?: boolean;
+    imgsMaxNum?: number;
     accept: string;
-    multiple: boolean;
+    multiple?: boolean;
 }
 @theme(css)
 export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
@@ -26,13 +26,14 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
         //     process: 0.2,
         // }
     ]
-    private _accept: string = 'image/*';
-    private _random: number = 0;
-    private _action: string = 'http://localhost:8800/';
-    private _initial: boolean = false;
-    private _onceChoose: boolean = true;
-    private _once: number = 1;
+    private _action: string;
+    private _imgsMaxNum: number = 1;
+    private _leftNum: number = 1;
+    private _accept: string;
     private _multiple: boolean = false;
+    // private _once: number = 1;
+    private _random: number = 0;
+    private _initial: boolean = false;
 
     constructor() {
         super();
@@ -102,11 +103,11 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
             };
             this._imgs.push(img);
             this._upload(img);
-            this._onceChoose ? this._once-- : null;
+            this._leftNum--;
             this.invalidate();
         });
         
-        console.log('imgs', this._imgs);
+        console.log('imgs',this._leftNum , this._imgs);
     }
     private _renderImgCover(img: any, i: number) {
         if(img.state === 'fail') {
@@ -125,7 +126,36 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
     }
     protected initialize() {
         this._random === 0 ? (Math.random() * 1000 + 1) : this._random;
-        
+        this._initial = true;
+        let {
+            initImgs,
+            imgsMaxNum,
+        } = this.properties;
+
+        if(initImgs) {
+            initImgs.forEach(imgUrl => {
+                let img = {
+                    id: undefined,
+                    name: '',
+                    url: imgUrl,
+                    state: 'succeed',//doing, succeed, fail
+                    process: 1,
+                    binaryData: undefined
+                };
+                this._imgs.push(img);
+            });
+            let length = initImgs.length;
+            let maxNum = imgsMaxNum ? imgsMaxNum : this._imgsMaxNum;
+            if(maxNum < length) {
+                throw Error(`ImgsMaxNum:${maxNum} should be larger than initImgs.length:${length}!`);
+            }
+            this._imgsMaxNum = maxNum;
+            this._leftNum = maxNum - length;
+        } else {
+            this._imgsMaxNum = imgsMaxNum ? imgsMaxNum : this._imgsMaxNum;
+            this._leftNum = this._imgsMaxNum;
+        }
+
         console.log('afterConstructor', this.properties);
     }
     // @beforeProperties()
@@ -167,11 +197,22 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
         //         binaryData: undefined
         //     });
         // }) : [];
+        // console.log('upload', this._onceChoose && this._once === 0, this._onceChoose, this._once );
+        let {
+            action,
+            accept,
+            multiple
+        } = this.properties;
+
+        this._action = action;
+        this._accept = accept;
+        this._multiple = multiple || false;
+
         return (
             <ul classes={[this.theme(css.root), css.rootFixed]}>
                 {this._imgs.map((img, i) => {
                     return (
-                        <li key={`img${this._random}${i}`} classes={[this.theme(css.img), css.imgFixed]}>
+                        <li key={`img${this._random}${i}`} classes={[this.theme(css.img), css.imgFixed]} onclick={}>
                             <img classes={img.state !== 'succeed' ? css.imgBlur : ''} src={img.url}/>
                             {img.state !== 'succeed' ? (
                                 this._renderImgCover(img, i)
@@ -180,11 +221,14 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
                         </li>
                     );
                 })}
-                {this._onceChoose && this._once === 0 ? null : (
+                { this._leftNum <= 0 ? null : (
                     <li classes={[this.theme(css.img), css.uploadBtn]}>
-                        <input type='file' multiple={this._multiple} accept={this._accept} onchange={this._chooseFile}/>
+                        <input type='file' multiple={this._multiple} accept={this._accept} onchange={this._chooseFile.bind(this)}/>
                     </li>
                 )}
+                <div>
+                    
+                </div>
             </ul>
         );
     }

@@ -12,6 +12,7 @@ export default class Activity extends ThemedMixin(WidgetBase)<ActivityProp> {
         return (
             <div classes={css.root}>
                 <SwiperArea imgs={imgs}></SwiperArea>
+                
             </div>
         );
     }

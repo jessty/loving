@@ -125,3 +125,9 @@
     height: 230px !important;
     width: calc(100% - 2px) !important;
 }
+.finishBtn {
+    display: block;
+    width: 2em;
+    padding: 0.5em 2em;
+    margin: 0.5em auto 0.8em;
+}

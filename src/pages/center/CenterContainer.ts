@@ -7,6 +7,9 @@ function getProperties(inject: AppContext, properties: any) {
         ...properties,
         myInform: {
             basicInformData: inject.basicInformData,
+        },
+        myAlbums: {
+            albums: inject.albums
         }
      };
 }

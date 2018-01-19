@@ -7,6 +7,7 @@ import { tsx } from '@dojo/widget-core//tsx';
 import InformBlock from './../../widgets/informBlock/InformBlock';
 import Upload from './../../widgets/upload/Upload';
 import { basicInformTable } from './../../support/informTables';
+import { Link } from '@dojo/routing/Link';
 
 export interface LoginProp {
     
@@ -171,9 +172,10 @@ export default class Login extends LoginBase<LoginProp> {
                 <div classes={[css.block, ...this._animateThird()]}>
                     <h3>实名认证</h3>
                     <h4>身份证正面</h4>
-                    <Upload extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} action='http://localhost:8800' multiple={false} accept='image/*' onceChoose={false}></Upload>
+                    <Upload extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
                     <h4>身份证背面</h4>
-                    <Upload extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} action='http://localhost:8800' multiple={false} accept='image/*' onceChoose={false}></Upload>
+                    <Upload extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
+                    <Link classes={[css.btn, css.finishBtn]} key='home' to='home'>完成</Link>
                 </div>
             </div>
         );

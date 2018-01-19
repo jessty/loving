@@ -16,7 +16,10 @@ export interface CenterProp {
     tab: string;
     myInform: {
         basicInformData: Object;
-    }
+    };
+    myAlbums: {
+        albums: Array<any>;
+    };
 }
 export const MY_TABS = {
     MOOD: 'myMood',
@@ -33,7 +36,72 @@ export const getLinkUrl = function(baseUrl: string, ...params: any[]): string {
     });
     return url;
 }
-export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
+export default class Center extends ThemedMixin(WidgetBase)<CenterProp> {
+
+// 弹窗
+    private _popEle: any;
+    private _showPop: boolean = false;
+    private _swiper: any;
+
+    // onAttach() {
+    //     this._swiper = new Swiper('.swiper-container', {
+    //         navigation: {
+    //             nextEl: '.swiper-button-next',
+    //             prevEl: '.swiper-button-prev',
+    //         },
+    //         // pagination: {
+    //         //     el: '.swiper-pagination',
+    //         //     clickable: true,
+    //         // },
+    //       });
+    //     //   this._swiper.autoplay.start();
+    // }
+    // onDetach() {
+    //     // this._swiper = undefined;
+    // }
+
+    private _closePop({target, currentTarget}: MouseEvent) {
+        if (target === currentTarget) {
+            this._showPop = false;
+            this._swiper = undefined;
+            this.invalidate();
+        }
+    }
+    private _viewImgs(i: number) {
+        this._swiper = new Swiper('.swiper-container', {
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // pagination: {
+            //     el: '.swiper-pagination',
+            //     clickable: true,
+            // },
+        });
+        this._showPop = true;
+        this._popEle = (
+            // <div classes={[this.theme(css.root), 'swiper-container']}>
+                <div classes={['swiper-wrapper']}>
+                {imgs.map((img, i) => (
+                    <div classes={[css.swiperSlide, 'swiper-slide']} key={'swiper-slide' + i}>
+                        {/* <a href={img.clickable ? img.href : 'javascript:void;'}>
+                            <img src={img.src} alt={img.alt} title={img.title}/>
+                        </a> */}
+                        {/* <Link to={img.clickable ? img.href : 'javascript:void;'} isOutlet={false}> */}
+                            <img src={img.src} alt={img.alt} title={img.title}/>
+                        {/* </Link> */}
+                    </div>
+                ))}
+                </div>
+                {/* <!-- Add Pagination --> */}
+                {/* <div classes={[css.swiperBtn, 'swiper-button-next']}></div> */}
+                {/* <div classes={[css.swiperBtn, 'swiper-button-prev']}></div> */}
+                {/* <div class='swiper-pagination'></div> */}
+            {/* </div> */}
+        );
+    }
+// 弹窗
+
     private _belongToLogger: Boolean = true;
     // private _tabs = {
     //     activity: 'myActivities',
@@ -129,6 +197,7 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
     //         }
     //     ]
     // };
+
     private _renderMyActivity() {
         return (
             <div classes={css.moods}>
@@ -137,9 +206,21 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
         );
     }
     private _renderMyAlbum() {
+        let {
+            myAlbums:{
+                albums
+            }
+        } = this.properties;
         return (
             <div classes={css.moods}>
-                <Upload action='http://localhost:8800' multiple={false} accept='image/*' onceChoose={false}></Upload>
+                <ul classes={css.albumsWrap}>
+                {albums.map((album) => (
+                    <li classes={css.album}>
+                        <h2>{album.name}</h2>
+                        <Upload initImgs={album.imgs} action={album.action} multiple={false} accept='image/*' imgsMaxNum={album.imgsMaxNum} clickItem={}></Upload>
+                    </li>
+                ))}
+                </ul>
             </div>
         );
     }
@@ -201,6 +282,23 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp>{
                     <section classes={css.myContent}>
                         {this.renderTab()}
                     </section>
+                </div>
+
+                {/* // 弹窗 */}
+                <div classes={[css.popLayer, this._showPop ? css.showPop : '']} onclick={this._closePop}>
+                    <div classes={css.popContent}>
+                        <div classes={[this.theme(css.root), 'swiper-container']}>
+                            <div classes={['swiper-wrapper']}>
+                            {this._showPop ? this._viewImgs() : null}
+                            </div>
+                            {/* <!-- Add Pagination --> */}
+                            <div classes={[css.swiperBtn, 'swiper-button-next']}></div>
+                            <div classes={[css.swiperBtn, 'swiper-button-prev']}></div>
+                            {/* <div class='swiper-pagination'></div> */}
+                        </div>
+                        
+                        {/* <span classes={css.closePop} onclick={this._closePop}>X</span> */}
+                    </div>
                 </div>
             </div>
 

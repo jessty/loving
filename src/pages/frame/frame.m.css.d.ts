@@ -4,3 +4,4 @@ export const logo: string;
 export const link: string;
 export const activeLink: string;
 export const settings: string;
+export const exit: string;
