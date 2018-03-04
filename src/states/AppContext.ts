@@ -303,8 +303,13 @@ export default class HomeContext extends Injector {
             return data;
         }
     }
-    public identify() {
-
+    public async identify(inform: any) {
+        inform.append('idenTime', new Date())
+        let res = await axios.post('/identify', inform);
+        if(res.status === 200) {
+            let data = res.data.data;
+            return data;
+        }
     }
 
     /**

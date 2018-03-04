@@ -6,13 +6,15 @@ import * as css from './upload.m.css';
 import axois from 'axios';
 
 export interface UploadProp {
-    action: string;
+    action?: string;
     initImgs?: Array<string>;
     imgsMaxNum?: number;
     accept: string;
     multiple?: boolean;
     clickItem?: (item: any, i: number, items: Array<any>) => void;
+    deliverFile?: (config: any, name: string) => void;
     numHint?:boolean;
+    name:string;
 }
 @theme(css)
 export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
@@ -36,51 +38,62 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
     // private _once: number = 1;
     private _random: number = 0;
     private _initial: boolean = false;
-    private _numHint: boolean = true;
+    private _numHint: boolean;
+    private _name: string;
+    private _deliverFile: (img: any, name:string) => void | undefined;
 
     constructor() {
         super();
         console.log('constructor', this.properties);
     }
 
-    private _upload(img: any) {
-        let data = new FormData();
-        data.append('img', img.binaryData);
-        let config = {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            timeout: 5000,
-            onUploadProgress: (process: any) => {
-                if(!process.lengthComputable) {
-                    return;
+    private _upload(img: any, name: string) {
+
+        if(this._deliverFile) {
+            this._deliverFile(img.binaryData, this._name);
+
+        }else {
+            let data = new FormData();
+            data.append(name, img.binaryData);
+
+            let config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                timeout: 5000,
+                onUploadProgress: (process: any) => {
+                    if(!process.lengthComputable) {
+                        return;
+                    }
+                    let { loaded, total } = process;
+                    let currentProcess = Number(((total - loaded) / total).toFixed(2));
+                    console.log('currentProcess', currentProcess);
+                    let span = Math.floor((currentProcess - img.process) * 10);
+                    if(span > 0) {
+                        img.process = currentProcess;
+                        this.invalidate();
+                    }
                 }
-                let { loaded, total } = process;
-                let currentProcess = Number(((total - loaded) / total).toFixed(2));
-                console.log('currentProcess', currentProcess);
-                let span = Math.floor((currentProcess - img.process) * 10);
-                if(span > 0) {
-                    img.process = currentProcess;
-                    this.invalidate();
-                }
-            }
-        };
-        axois.post(
-            this._action,
-            data,
-            config
-        ).then((res) => {
-            console.log('res', res);
-            let id = res.data.id;
-            img.id = id;
-            img.state = 'succeed';
-            this.invalidate();
-        }).catch((err) => {
-            console.log('res', err);
-            img.state = 'fail';
-            img.process = 0;
-            this.invalidate();
-        });
+            };
+
+            axois.post(
+                this._action,
+                data,
+                config
+            ).then((res) => {
+                console.log('res', res);
+                let id = res.data.id;
+                img.id = id;
+                img.state = 'succeed';
+                this.invalidate();
+            }).catch((err) => {
+                console.log('res', err);
+                img.state = 'fail';
+                img.process = 0;
+                this.invalidate();
+            });
+        }
+        
     }
 
     private _reUpload({target}: MouseEvent) {
@@ -90,7 +103,7 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
         let img = this._imgs[index];
         img.state = 'doing';
         this.invalidate();
-        this._upload(img);
+        this._upload(img, this._name);
     }
 
     private _chooseFile({target:{files}}: any) {
@@ -106,7 +119,7 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
                 binaryData: file
             };
             this._imgs.push(img);
-            this._upload(img);
+            this._upload(img, this._name);
             this._leftNum--;
             this.invalidate();
         });
@@ -212,19 +225,22 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
             action,
             accept,
             multiple,
-            numHint
+            numHint = true,
+            name,
+            deliverFile
         } = this.properties;
 
-        this._action = action;
+        this._action = action || '';
         this._accept = accept;
         this._multiple = multiple || false;
-        this._numHint = numHint || true;
-
+        this._numHint = numHint;
+        this._name = name || '';
+        this._deliverFile = deliverFile;
         return (
             <ul classes={[this.theme(css.root), css.rootFixed]}>
                 {this._imgs.map((img, i, imgs) => (
                     <li key={`img${this._random}${i}`} classes={[this.theme(css.img), css.imgFixed]}>
-                        <img classes={img.state !== 'succeed' ? css.imgBlur : ''} src={img.url} onclick={()=>{this._clickItem(img, i, imgs)}}/>
+                        <img classes={this._numHint && img.state !== 'succeed' ? css.imgBlur : ''} src={img.url} onclick={()=>{this._clickItem(img, i, imgs)}}/>
                         {this._numHint && img.state !== 'succeed' ? (
                             this._renderImgCover(img, i)
                         ) : null}

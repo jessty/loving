@@ -66,7 +66,7 @@ export default class Login extends LoginBase<LoginProp> {
     private _signup: Boolean = false;
     private _formData: Partial<logData> = {};
     private _initData: Object|undefined;
-    private _idenData: Object;
+    private _idenData = new FormData();
 
     private _input({target}: TypedTargetEvent<HTMLInputElement>): void{
         let {name, value} = target;
@@ -80,6 +80,7 @@ export default class Login extends LoginBase<LoginProp> {
                 console.log(data);
                 this._initData = data;
                 this.invalidate();
+                this._animateForword();
                 this._animateForword();
             })
             .catch((err) => {
@@ -108,10 +109,12 @@ export default class Login extends LoginBase<LoginProp> {
             console.error(err);
         });
     }
-    private
-    private _submitIden(inform: Object) {
+    private _chooseFile(file: any, name:string) {
+        this._idenData.append(name, file)
+    }
+    private _submitIden() {
         let {identify} = this.properties;
-        identify(inform)
+        identify(this._idenData)
         .then((data) => {
 
         })
@@ -212,10 +215,12 @@ export default class Login extends LoginBase<LoginProp> {
                 <div classes={[css.block, ...this._animateThird()]}>
                     <h3>实名认证</h3>
                     <h4>身份证正面</h4>
-                    <Upload extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
+                    <Upload name={'front'} extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} deliverFile={this._chooseFile} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
                     <h4>身份证背面</h4>
-                    <Upload extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
-                    <a classes={[css.btn, css.finishBtn]} onclick={this}>提交</a> <Link classes={[css.btn, css.finishBtn]} key='home' to='home'>跳过</Link>
+                    <Upload name={'back'} extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} deliverFile={this._chooseFile} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
+                    <div classes={css.btnArea}>
+                        <a classes={[css.btn, css.finishBtn]} onclick={this._submitIden}>提交</a> <Link classes={[css.btn, css.finishBtn]} key='home' to='home'>跳过</Link>
+                    </div>
                 </div>
             </div>
         );
