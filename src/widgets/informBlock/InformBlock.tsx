@@ -15,7 +15,7 @@ export interface informBlockProp {
     fields: Object;
     initData?: Object;
     informs?: any;
-    onSubmit?(): void;
+    onSubmit?(values: Object): void;
     onCancel?(): void;
     initState: 'read'|'edit';
     editable: Boolean;
@@ -31,7 +31,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
     private _fields: any;
     private _initiated: Boolean;
     private _values: any = {};
-    private _filedChange(key: string, value: any) {
+    private _fieldChange(key: string, value: any) {
         this._values[key] = value;
         this._fields[key].value = value;
     }
@@ -43,7 +43,9 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
     }
     private _onSubmitClick() {
         let {onSubmit} = this.properties;
-        onSubmit ? onSubmit() : null;
+        if(onSubmit) {
+            onSubmit(this._values)
+        }
         console.log(this._editable);
         this._readable ? this._toggleState() : null;
     }
@@ -58,9 +60,9 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
             <div classes={css.field} key={'select-' + key}>
                 <label classes={css.fieldLabel}>{selectField.label}</label>
                 {this._isEditing ?
-                    <MySelect choises={selectField.choises} initValue={selectField.value} onChange={this._filedChange.bind(this, key)}></MySelect> :
+                    <MySelect choises={selectField.choises} initValue={selectField.value} onChange={this._fieldChange.bind(this, key)}></MySelect> :
                     <span key={'select-result-' + key} classes={css.fieldResult}>
-                        {selectField.value !== undefined && selectField.value !== '' ? selectField.choises[selectField.value] : '未选'}
+                        {selectField.choises[selectField.value]}
                     </span>
                 }
             </div>
@@ -71,8 +73,10 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
             <div classes={css.field} key={'textInput-' + key}>
                 <label classes={css.fieldLabel}>{textInputField.label}</label>
                 {this._isEditing ?
-                    <input value={textInputField.value} onchange={({target:{value}}) => {this._filedChange(key, value);}}/> :
-                    <span classes={css.fieldResult}>{textInputField.value !== undefined && textInputField.value !== '' ? textInputField.value + '' : '未填写'}</span>
+                    <input value={textInputField.value} onchange={({target:{value}}) => {this._fieldChange(key, value);}}/> :
+                    <span classes={css.fieldResult}>
+                        {textInputField.value ? textInputField.value + '' : '未填写'}
+                    </span>
                 }
             </div>
         );
@@ -82,8 +86,10 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
             <div classes={[css.field, css.textareField, (this._isEditing ? null : css.fixTextarea)]} key={'textArea-' + key}>
                 <label classes={css.fieldLabel}>{textAreaField.label}</label>
                 {this._isEditing ?
-                    <textarea value={textAreaField.value} onchange={({target:{value}}) => {this._filedChange(key, value);}}></textarea> :
-                    <span classes={css.fieldResult}>{textAreaField.value !== undefined && textAreaField.value !== '' ? textAreaField.value + '' : '未填写'}</span>
+                    <textarea value={textAreaField.value} onchange={({target:{value}}) => {this._fieldChange(key, value);}}></textarea> :
+                    <span classes={css.fieldResult}>
+                        {textAreaField.value ? textAreaField.value + '' : '未填写'}
+                    </span>
                 }
             </div>
         );
@@ -167,7 +173,8 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         console.log('inform fields1', this._fields);
     }
     protected render() {
-        this._initiated ? null : this._initWidget();
+        // this._initiated ? null : this._initWidget();
+        this._initWidget()
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
                 {this._isEditing ? this._renderEditState() : this._renderReadState()}

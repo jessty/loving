@@ -135,10 +135,10 @@
 }
 .popContent {
     position: relative;
-    padding: 2em;
-    background: white;
+    /* padding: 2em; */
+    /* background: white; */
     border-radius: 2px;
-    width: 32em;
+    width: 60em;
 }
 .closePop {
     position: absolute;
@@ -148,4 +148,30 @@
     right: 0;
     cursor: pointer;
     color: rgb(185, 186, 187)；
+}
+
+.swiperContainer {
+    /* height: 450px; */
+}
+.swiperWrap {
+    display: flex;
+    align-items: center;
+}
+.swiperSlide *{
+    display: inline-block;
+    height: inherit;
+    /* width: 100%; */
+}
+.swiperContainer>.swiperBtn {
+    pointer-events: auto;
+}
+.swiperSlide {
+    /* margin: 0px 4em; */
+    display: flex;
+    align-items: center;
+}
+.swiperSlide > img {
+    box-sizing: border-box;
+    width: inherit;
+    padding: 0px 3em;
 }

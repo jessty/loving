@@ -70,7 +70,8 @@ export default class Home extends ThemedMixin(WidgetBase)<HomeProp> {
                     </div> */}
                     {
                         visitingCardsData.map((data) => (
-                            <VisitingCard extraClasses={{'root': css.visitingCard}} visitingCardData={data} clickLike={updateVisitingCard} sendEmail={this._sendEmail}></VisitingCard>
+                            // <VisitingCard extraClasses={{'root': css.visitingCard}} visitingCardData={data} clickLike={updateVisitingCard} sendEmail={this._sendEmail}></VisitingCard>
+                            <VisitingCard extraClasses={{'root': css.visitingCard}} visitingCardData={data} clickLike={updateVisitingCard}></VisitingCard>
                         ))
                     }
                 </main>

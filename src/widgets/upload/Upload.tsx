@@ -11,6 +11,8 @@ export interface UploadProp {
     imgsMaxNum?: number;
     accept: string;
     multiple?: boolean;
+    clickItem?: (item: any, i: number, items: Array<any>) => void;
+    numHint?:boolean;
 }
 @theme(css)
 export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
@@ -34,6 +36,7 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
     // private _once: number = 1;
     private _random: number = 0;
     private _initial: boolean = false;
+    private _numHint: boolean = true;
 
     constructor() {
         super();
@@ -89,6 +92,7 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
         this.invalidate();
         this._upload(img);
     }
+
     private _chooseFile({target:{files}}: any) {
         // console.log(target.files);
         files = Array.from(files);
@@ -106,9 +110,10 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
             this._leftNum--;
             this.invalidate();
         });
-        
+
         console.log('imgs',this._leftNum , this._imgs);
     }
+
     private _renderImgCover(img: any, i: number) {
         if(img.state === 'fail') {
             return (
@@ -124,6 +129,7 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
             );
         }
     }
+
     protected initialize() {
         this._random === 0 ? (Math.random() * 1000 + 1) : this._random;
         this._initial = true;
@@ -133,16 +139,14 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
         } = this.properties;
 
         if(initImgs) {
-            initImgs.forEach(imgUrl => {
-                let img = {
-                    id: undefined,
+            initImgs.forEach(img => {
+                let imgInform = Object.assign(img, {
                     name: '',
-                    url: imgUrl,
                     state: 'succeed',//doing, succeed, fail
                     process: 1,
                     binaryData: undefined
-                };
-                this._imgs.push(img);
+                });
+                this._imgs.push(imgInform);
             });
             let length = initImgs.length;
             let maxNum = imgsMaxNum ? imgsMaxNum : this._imgsMaxNum;
@@ -187,6 +191,12 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
     // onDetach() {
     //     console.log('onDetach', this.properties);
     // }
+    private _clickItem(img: any, i: number, imgs: Array<any>) {
+        let {clickItem} = this.properties;
+        let imgUrl = img.url;
+        let imgUrls = imgs.map((img) => img.url);
+        clickItem ? clickItem(imgUrl, i, imgUrls) : null;
+    }
     protected render() {
         console.log('render', this.properties);
         this._initial ? null : this.initialize();
@@ -201,33 +211,33 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
         let {
             action,
             accept,
-            multiple
+            multiple,
+            numHint
         } = this.properties;
 
         this._action = action;
         this._accept = accept;
         this._multiple = multiple || false;
+        this._numHint = numHint || true;
 
         return (
             <ul classes={[this.theme(css.root), css.rootFixed]}>
-                {this._imgs.map((img, i) => {
-                    return (
-                        <li key={`img${this._random}${i}`} classes={[this.theme(css.img), css.imgFixed]} onclick={}>
-                            <img classes={img.state !== 'succeed' ? css.imgBlur : ''} src={img.url}/>
-                            {img.state !== 'succeed' ? (
-                                this._renderImgCover(img, i)
-                            ) : null}
-                            {/* <span classes={css.deleteIcon}>X</span> */}
-                        </li>
-                    );
-                })}
+                {this._imgs.map((img, i, imgs) => (
+                    <li key={`img${this._random}${i}`} classes={[this.theme(css.img), css.imgFixed]}>
+                        <img classes={img.state !== 'succeed' ? css.imgBlur : ''} src={img.url} onclick={()=>{this._clickItem(img, i, imgs)}}/>
+                        {this._numHint && img.state !== 'succeed' ? (
+                            this._renderImgCover(img, i)
+                        ) : null}
+                        {/* <span classes={css.deleteIcon}>X</span> */}
+                    </li>
+                ))}
                 { this._leftNum <= 0 ? null : (
                     <li classes={[this.theme(css.img), css.uploadBtn]}>
                         <input type='file' multiple={this._multiple} accept={this._accept} onchange={this._chooseFile.bind(this)}/>
                     </li>
                 )}
                 <div>
-                    
+
                 </div>
             </ul>
         );

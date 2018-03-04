@@ -3,7 +3,7 @@ import { Injector } from '@dojo/widget-core/Injector';
 
 import { VisitingCardData } from '../widgets/visitingCard/VisitingCard';
 import { CenterCardData } from './../widgets/centerCard/CenterCard';
-import axois from 'axios';
+import axios from './../support/axios';
 import ActivityContainer from './../pages/activity/ActivityContainer';
 
 export default class HomeContext extends Injector {
@@ -13,6 +13,7 @@ export default class HomeContext extends Injector {
     private _basicInformData: Object;
     private _activitySwipers: Array<any>;
     private _albums: Array<any>;
+    private _user: Object;
 
 	constructor() {
 
@@ -82,7 +83,7 @@ export default class HomeContext extends Injector {
             {
                 id: '12343',
                 headImgUrl: './../../assets/pic3.jpg',
-                nickName: '告白气球',
+                nickName: 'Color',
                 age: 22,
                 height: 165,
                 edu: '本科',
@@ -99,10 +100,50 @@ export default class HomeContext extends Injector {
                 desiredSalary: '2000-15000',
                 desiredJob: '大叔控'
             },
+            {
+                id: '12349',
+                headImgUrl: './../../assets/pic4.jpg',
+                nickName: '告白气球',
+                age: 22,
+                height: 165,
+                edu: '本科',
+                salary: '2000-5000',
+                job: '名企实习',
+                quote: '',
+                isVip: false,
+                hasPhone: true,
+                identified: true,
+                like: false,
+                desiredAge: '22岁以上',
+                desiredHeight: '165cm以上',
+                desiredEdu: '本科',
+                desiredSalary: '2000-15000',
+                desiredJob: '大叔控'
+            },
+            {
+                id: '12348',
+                headImgUrl: './../../assets/pic2.jpg',
+                nickName: 'Jack',
+                age: 22,
+                height: 165,
+                edu: '本科',
+                salary: '2000-5000',
+                job: '名企实习',
+                quote: '',
+                isVip: true,
+                hasPhone: true,
+                identified: false,
+                like: false,
+                desiredAge: '22岁以上',
+                desiredHeight: '165cm以上',
+                desiredEdu: '本科',
+                desiredSalary: '2000-15000',
+                desiredJob: '大叔控'
+            },
         ]
         let centerCardData = {
             id : '12340',
-            headImgUrl : './../../assets/pic4.jpg',
+            headImgUrl : './../../assets/pic1.jpg',
             nickName : 'Yomocy',
             isVip : true,
             hasPhone : true,
@@ -113,16 +154,16 @@ export default class HomeContext extends Injector {
             beans : 1000
         };
         let basicInformData = {
-            nickName: 'star',
-            marital_status: 0,
-            purpose: undefined,
-            gender: undefined,
-            birthday: '2018/1/14',
-            weight: 175,
-            height: 175,
-            education: 2,
-            salary: 2,
-            livingplace: '广东广州'
+            nickname: null,
+            maritalStatus: 0,
+            purpose: 0,
+            gender: 0,
+            birthday: null,
+            weight: null,
+            height: null,
+            education: 0,
+            salary: 0,
+            livingPlace: null
         };
         let activitySwipers = [
             {
@@ -156,22 +197,61 @@ export default class HomeContext extends Injector {
         ]
         let albums = [
             {
-                name: 'my live',
-                imgs: ['./../../assets/pic.jpg', './../../assets/pic1.jpg', './../../assets/pic2.jpg'],
-                imgsMaxNum: 7,
-                action: 'http://localhost:8800'
+                idAlbum: 1,
+                albumName: 'my live',
+                imgs: [
+                    {
+                        idImg: 1,
+                        imgUrl: './../../assets/pic.jpg'
+                    },
+                    {
+                        idImg: 2,
+                        imgUrl: './../../assets/pic1.jpg'
+                    },
+                    {
+                        idImg: 3,
+                        imgUrl: './../../assets/pic2.jpg'
+                    }
+                ],
+                albumTime: '2017-1-1 10:00:00',
             },
             {
-                name: '你的名字',
-                imgs: ['./../../assets/pic.jpg', './../../assets/pic1.jpg', './../../assets/pic2.jpg'],
-                imgsMaxNum: 7,
-                action: 'http://localhost:8800'
+                idAlbum: 2,
+                albumName: 'my live',
+                imgs: [
+                    {
+                        idImg: 1,
+                        imgUrl: './../../assets/pic.jpg'
+                    },
+                    {
+                        idImg: 2,
+                        imgUrl: './../../assets/pic1.jpg'
+                    },
+                    {
+                        idImg: 3,
+                        imgUrl: './../../assets/pic2.jpg'
+                    }
+                ],
+                albumTime: '2017-1-1 10:00:00',
             },
             {
-                name: '为热爱而生',
-                imgs: ['./../../assets/pic.jpg', './../../assets/pic1.jpg', './../../assets/pic2.jpg'],
-                imgsMaxNum: 7,
-                action: 'http://localhost:8800'
+                idAlbum: 3,
+                albumName: 'my live',
+                imgs: [
+                    {
+                        idImg: 1,
+                        imgDir: './../../assets/pic.jpg'
+                    },
+                    {
+                        idImg: 2,
+                        imgDir: './../../assets/pic1.jpg'
+                    },
+                    {
+                        idImg: 3,
+                        imgDir: './../../assets/pic2.jpg'
+                    }
+                ],
+                albumTime: '2017-1-1 10:00:00',
             }
         ];
         this._albums = albums;
@@ -179,8 +259,70 @@ export default class HomeContext extends Injector {
         this._basicInformData = basicInformData;
         this._visitingCardsData = visitingCardsData;
         this._centerCardData = centerCardData;
+        this._user = {}
 	}
+    public async login(formData: Object) {
+        formData.loginTime = new Date();
+        let res = await axios.post('/login', formData)
+        if(res.status === 200) {
+            window.location.href = '#/home';
+            Object.assign(this._user, res.data);
+        }
+        return res.data
+    }
+    public async signup(formData: Object) {
+        formData.signupTime = new Date();
 
+        let res = await axios.post('/signup', formData);
+        console.log('res', res);
+        if ( res.status === 200 ) {
+            let data = res.data.data;
+
+            Object.assign(this._user, data);
+            this._basicInformData.nickname = '用户-' + data.idUser;
+
+            return this._basicInformData;
+        }else {
+            console.error('AppContext.ts: signup()', res);
+            return undefined;
+        }
+    }
+    public async fetchInform(table: string, idUser: number) {
+        let res = await axios.get(`/inform/${table}`,{
+            params:{idUser:idUser}
+        })
+        if(res.status === 200) {
+            return res.data;
+        }
+    }
+    public async updateInform(table: string , newData: Object, cb?:()=>{}) {
+        newData.idUser = this._user.idUser;
+        let res = await axios.post(`/inform/${table}`, newData);
+        if (res.status === 200) {
+            let data = res.data.data;
+            return data;
+        }
+    }
+    public identify() {
+
+    }
+
+    /**
+     * getAlbums
+     */
+    public async getAlbums(idUser: number|string, fn: any) {
+        let res = await axios.get(`/album?idUser=${idUser}`);
+        if(res.status === 200) {
+            let {imgDir, albums} = res.data.data;
+            albums.forEach(album => {
+                album.imgs.forEach(img => {
+                    img.imgUrl = 'http://localhost:3000/imgs/user/' + imgDir + '/' + img.imgUrl;
+                })
+            })
+            this._albums = albums;
+            this.emit({ type: 'invalidate' });
+        }
+    }
 	get centerCardData(): CenterCardData {
 		return this._centerCardData;
     }
@@ -207,7 +349,7 @@ export default class HomeContext extends Injector {
             }
         });
         // 发送数据请求
-        // axois.post();
+        // axios.post();
         this.emit({ type: 'invalidate' });
 	}
 

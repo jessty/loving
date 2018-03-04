@@ -1,5 +1,5 @@
 import { Outlet } from '@dojo/routing/Outlet';
-import Login from './../pages/login/Login';
+import LoginContainer from './../pages/login/LoginContainer';
 
-export const LoginOutlet = Outlet(Login, 'login');
+export const LoginOutlet = Outlet(LoginContainer, 'login');
 export default LoginOutlet;

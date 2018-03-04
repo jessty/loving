@@ -6,6 +6,7 @@ import * as css from './moodCard.m.css';
 export interface MoodCardProp {
     mood?: Array<any>;
     isOwner?: boolean;
+    viewImgs?: (img: any, i: number, imgs: Array<any>) => void;
 }
 @theme(css)
 export default class MoodCard extends ThemedMixin(WidgetBase)<MoodCardProp> {
@@ -16,12 +17,13 @@ export default class MoodCard extends ThemedMixin(WidgetBase)<MoodCardProp> {
         
     }
     private _renderSubMoods(subMood: any) {
+        let {viewImgs} = this.properties;
         return (
             <li classes={css.subMood}>
                 <p>{subMood.words}</p>
                 <div classes={css.imgs}>
-                    {subMood.imgs.length === 0 ? null : subMood.imgs.map((imgUrl: string) => (
-                        <img title='' src={imgUrl} />
+                    {subMood.imgs.length === 0 ? null : subMood.imgs.map((imgUrl: string,i: number, imgUrls: Array<string>) => (
+                        <img title='' src={imgUrl} onclick={()=>{viewImgs ? viewImgs(imgUrl, i, imgUrls):null}}/>
                     ))}
                 </div>
                 <div classes={css.footSpans}>
@@ -45,11 +47,22 @@ export default class MoodCard extends ThemedMixin(WidgetBase)<MoodCardProp> {
                 id: 1234,
                 words: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
                 imgs: [
+                    this._baseImgUrl + 'pic1.jpg',
                     this._baseImgUrl + 'pic2.jpg',
-                    this._baseImgUrl + 'pic2.jpg',
-                    this._baseImgUrl + 'pic2.jpg'
+                    this._baseImgUrl + 'pic3.jpg'
                 ],
-                likes: 100,
+                likes: 20,
+                time: this._date.toLocaleTimeString()
+            },
+            {
+                id: 1234,
+                words: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
+                imgs: [
+                    this._baseImgUrl + 'pic4.jpg',
+                    this._baseImgUrl + 'pic2.jpg',
+                    this._baseImgUrl + 'pic.jpg'
+                ],
+                likes: 80,
                 time: this._date.toLocaleTimeString()
             },
             {
@@ -57,18 +70,7 @@ export default class MoodCard extends ThemedMixin(WidgetBase)<MoodCardProp> {
                 words: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
                 imgs: [
                     this._baseImgUrl + 'pic2.jpg',
-                    this._baseImgUrl + 'pic2.jpg',
-                    this._baseImgUrl + 'pic2.jpg'
-                ],
-                likes: 100,
-                time: this._date.toLocaleTimeString()
-            },
-            {
-                id: 1234,
-                words: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
-                imgs: [
-                    this._baseImgUrl + 'pic2.jpg',
-                    this._baseImgUrl + 'pic2.jpg',
+                    this._baseImgUrl + 'pic3.jpg',
                     this._baseImgUrl + 'pic2.jpg'
                 ],
                 likes: 100,

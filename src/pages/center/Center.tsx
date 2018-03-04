@@ -9,7 +9,8 @@ import MoodCard from './../../widgets/moodCard/MoodCard';
 import MyActivity from './../../widgets/myActivity/MyActivity';
 import Upload from './../../widgets/upload/Upload';
 import { allTable } from './../../support/informTables';
-
+import afterRender from "@dojo/widget-core/decorators/afterRender";
+// import Swiper from 'swiper'
 
 export interface CenterProp {
     id: string;
@@ -19,6 +20,7 @@ export interface CenterProp {
     };
     myAlbums: {
         albums: Array<any>;
+        getAlbums(idUser: string|number, fn: any): any
     };
 }
 export const MY_TABS = {
@@ -42,7 +44,7 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp> {
     private _popEle: any;
     private _showPop: boolean = false;
     private _swiper: any;
-
+    private _once: number = 2;
     // onAttach() {
     //     this._swiper = new Swiper('.swiper-container', {
     //         navigation: {
@@ -67,45 +69,46 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp> {
             this.invalidate();
         }
     }
-    private _viewImgs(i: number) {
+    @afterRender()
+    protected myAfterRender(result: any) {
+        // this._swiper = new Swiper('.swiper-container', {
+        //     navigation: {
+        //         nextEl: '.swiper-button-next',
+        //         prevEl: '.swiper-button-prev',
+        //     },
+        // });
+        // console.log('afterRender', this.properties);
+        return result;
+    }
+    private _viewImgs(imgUrl: string, i: number, imgUrls: Array<string>) {
+        this._showPop = true;
+        this._popEle = imgUrls.map((imgUrl, i) => (
+            <div classes={[css.swiperSlide, 'swiper-slide']} key={'swiper-slide' + i}>
+                <img src={imgUrl}/>
+            </div>
+        ));
+
+        this.invalidate();
+        let index = i;
         this._swiper = new Swiper('.swiper-container', {
+            initialSlide: i,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
-            // pagination: {
-            //     el: '.swiper-pagination',
-            //     clickable: true,
-            // },
+                // pagination: {
+                //     el: '.swiper-pagination',
+                //     clickable: true,
+                // },
         });
-        this._showPop = true;
-        this._popEle = (
-            // <div classes={[this.theme(css.root), 'swiper-container']}>
-                <div classes={['swiper-wrapper']}>
-                {imgs.map((img, i) => (
-                    <div classes={[css.swiperSlide, 'swiper-slide']} key={'swiper-slide' + i}>
-                        {/* <a href={img.clickable ? img.href : 'javascript:void;'}>
-                            <img src={img.src} alt={img.alt} title={img.title}/>
-                        </a> */}
-                        {/* <Link to={img.clickable ? img.href : 'javascript:void;'} isOutlet={false}> */}
-                            <img src={img.src} alt={img.alt} title={img.title}/>
-                        {/* </Link> */}
-                    </div>
-                ))}
-                </div>
-                {/* <!-- Add Pagination --> */}
-                {/* <div classes={[css.swiperBtn, 'swiper-button-next']}></div> */}
-                {/* <div classes={[css.swiperBtn, 'swiper-button-prev']}></div> */}
-                {/* <div class='swiper-pagination'></div> */}
-            {/* </div> */}
-        );
+        console.log('initial slide', i, this._swiper);
     }
-// 弹窗
-
+        // 弹窗
+        
     private _belongToLogger: Boolean = true;
-    // private _tabs = {
-    //     activity: 'myActivities',
-    //     email: 'myEmails',
+        // private _tabs = {
+            //     activity: 'myActivities',
+            //     email: 'myEmails',
     //     inform: 'myInform',
     //     album: 'myAlbums',
     //     mood: 'myMood',
@@ -206,18 +209,20 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp> {
         );
     }
     private _renderMyAlbum() {
+
         let {
-            myAlbums:{
+            myAlbums: {
                 albums
             }
         } = this.properties;
+        console.log('done')
         return (
             <div classes={css.moods}>
                 <ul classes={css.albumsWrap}>
                 {albums.map((album) => (
                     <li classes={css.album}>
-                        <h2>{album.name}</h2>
-                        <Upload initImgs={album.imgs} action={album.action} multiple={false} accept='image/*' imgsMaxNum={album.imgsMaxNum} clickItem={}></Upload>
+                        <h2>{album.albumName}</h2>
+                        <Upload initImgs={album.imgs} action={'http://localhost:3000'} multiple={false} accept='image/*' imgsMaxNum={7} clickItem={this._viewImgs.bind(this)}></Upload>
                     </li>
                 ))}
                 </ul>
@@ -227,9 +232,9 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp> {
     private _renderMyMood() {
         return (
             <div classes={css.moods}>
-                <MoodCard></MoodCard>
-                <MoodCard></MoodCard>
-                <MoodCard></MoodCard>
+                <MoodCard viewImgs={this._viewImgs.bind(this)}></MoodCard>
+                <MoodCard viewImgs={this._viewImgs.bind(this)}></MoodCard>
+                <MoodCard viewImgs={this._viewImgs.bind(this)}></MoodCard>
             </div>
         );
     }
@@ -248,8 +253,14 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp> {
             })
         );
     }
-    protected renderTab() {
+    protected async renderTab() {
         console.log('tab', this.properties.tab);
+        if(this._once != 1) {
+            this.properties.myAlbums.getAlbums(this.properties.id);
+        }else {
+            this._once--;
+        }
+
         switch( this.properties.tab ) {
             case MY_TABS.MOOD: return this._renderMyMood();
             case MY_TABS.ALBUM: return this._renderMyAlbum();
@@ -287,9 +298,9 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp> {
                 {/* // 弹窗 */}
                 <div classes={[css.popLayer, this._showPop ? css.showPop : '']} onclick={this._closePop}>
                     <div classes={css.popContent}>
-                        <div classes={[this.theme(css.root), 'swiper-container']}>
-                            <div classes={['swiper-wrapper']}>
-                            {this._showPop ? this._viewImgs() : null}
+                        <div classes={[css.swiperContainer, 'swiper-container']}>
+                            <div classes={[css.swiperWrap, 'swiper-wrapper']}>
+                                {this._popEle}
                             </div>
                             {/* <!-- Add Pagination --> */}
                             <div classes={[css.swiperBtn, 'swiper-button-next']}></div>
@@ -300,6 +311,9 @@ export default class Center extends ThemedMixin(WidgetBase)<CenterProp> {
                         {/* <span classes={css.closePop} onclick={this._closePop}>X</span> */}
                     </div>
                 </div>
+
+
+
             </div>
 
         );

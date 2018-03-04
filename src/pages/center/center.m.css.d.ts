@@ -12,3 +12,7 @@ export const popLayer: string;
 export const showPop: string;
 export const popContent: string;
 export const closePop: string;
+export const swiperContainer: string;
+export const swiperWrap: string;
+export const swiperSlide: string;
+export const swiperBtn: string;
