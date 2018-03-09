@@ -141,3 +141,9 @@
     justify-content: center;
     margin: 0px 4em 0.4em;
 }
+.quoteArea {
+    width: 82%;
+    height: 100px;
+    margin-left: 2.5rem;
+    margin-top: 1rem;
+}

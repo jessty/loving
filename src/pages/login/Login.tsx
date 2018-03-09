@@ -14,6 +14,7 @@ export interface LoginProp {
     signup(form: Object): Promise<Object>;
     updateInform(table: string, inform: Object): Promise<Object>;
     identify(form: Object): Promise<Object>;
+    updateAvator(form: Object): Promise<Object>;
 }
 export interface logData {
     user: string;
@@ -67,6 +68,7 @@ export default class Login extends LoginBase<LoginProp> {
     private _formData: Partial<logData> = {};
     private _initData: Object|undefined;
     private _idenData = new FormData();
+    private _avatorData = new FormData();
 
     private _input({target}: TypedTargetEvent<HTMLInputElement>): void{
         let {name, value} = target;
@@ -80,7 +82,6 @@ export default class Login extends LoginBase<LoginProp> {
                 console.log(data);
                 this._initData = data;
                 this.invalidate();
-                this._animateForword();
                 this._animateForword();
             })
             .catch((err) => {
@@ -100,6 +101,7 @@ export default class Login extends LoginBase<LoginProp> {
     }
     private _submitInform(inform: Object) {
         let {updateInform} = this.properties;
+
         updateInform('basic', inform)
         .then((data) => {
             console.log(data);
@@ -109,14 +111,33 @@ export default class Login extends LoginBase<LoginProp> {
             console.error(err);
         });
     }
-    private _chooseFile(file: any, name:string) {
-        this._idenData.append(name, file)
+    private _chooseFile(type: string, file: any, name:string) {
+        if(type === 'identify'){
+            this._idenData.set(name, file);
+        }else if(type === 'avator'){
+            this._avatorData.set(name, file);
+        }
     }
     private _submitIden() {
         let {identify} = this.properties;
         identify(this._idenData)
-        .then((data) => {
-
+        .then((data: any) => {
+            
+            this._animateForword();
+            document.location = '#/home';
+        })
+        .catch(err => {
+            console.error('identify', err);
+        })
+    }
+    private _submitAvatorData() {
+        let {updateAvator} = this.properties;
+        updateAvator(this._avatorData)
+        .then((data: any) => {
+            this._animateForword();
+        })
+        .catch(err => {
+            console.error('update avator', err);
         })
     }
     private _changeState() {
@@ -169,19 +190,34 @@ export default class Login extends LoginBase<LoginProp> {
             return ['animated', css.animateHidden];
         }else if(this._animationState === 1) {
             return ['animated', 'bounceInRight'];
-        }else{
+        }else if(this._animationState === 2){
+            return ['animated', 'bounceOutLeft'];
+        }else {
             return ['animated', 'bounceOutLeft'];
         }
     }
     private _animateThird(): Array<string> {
         if(this._animationState <= 1) {
             return ['animated', css.animateHidden];
-        }else {
+        }else if(this._animationState === 2) {
             return ['animated', 'bounceInRight'];
+        }else if(this._animationState === 3){
+            return ['animated', 'bounceOutLeft'];
+        }else {
+            return ['animated', 'bounceOutLeft'];
+        }
+    }
+    private _animateForth(): Array<string> {
+        if(this._animationState <= 2) {
+            return ['animated', css.animateHidden];
+        }else if(this._animationState === 3){
+            return ['animated', 'bounceInRight'];
+        }else {
+            return ['animated', 'bounceOutLeft'];
         }
     }
     private _animateForword() {
-        this._animationState = (this._animationState + 1) % 3;
+        this._animationState = (this._animationState + 1) % 4;
         this.invalidate();
     }
     private _animateBack() {
@@ -213,11 +249,20 @@ export default class Login extends LoginBase<LoginProp> {
                     <InformBlock extraClasses={{'root': css.informBlock}} initState='edit' editable={true} readable={false} fields={basicInformTable.fields} initData={this._initData} onSubmit={this._submitInform}></InformBlock>
                 </div>
                 <div classes={[css.block, ...this._animateThird()]}>
+                    <h4>上传头像</h4>
+                    <Upload name={'avator'} extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} deliverFile={this._chooseFile.bind(this, 'avator')} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
+                    <h4>写上内心独白吧</h4>
+                    <textarea classes={[css.btnArea, css.quoteArea]} onchange={(e) => {this._chooseFile('avator', e.target.value, 'quote')}></textarea>
+                    <div classes={css.btnArea}>
+                        <a classes={[css.btn, css.finishBtn]} onclick={this._submitAvatorData}>提交</a>
+                    </div>
+                </div>
+                <div classes={[css.block, ...this._animateForth()]}>
                     <h3>实名认证</h3>
                     <h4>身份证正面</h4>
-                    <Upload name={'front'} extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} deliverFile={this._chooseFile} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
+                    <Upload name={'front'} extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} deliverFile={this._chooseFile.bind(this, 'identify')} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
                     <h4>身份证背面</h4>
-                    <Upload name={'back'} extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} deliverFile={this._chooseFile} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
+                    <Upload name={'back'} extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} deliverFile={this._chooseFile.bind(this, 'identify')} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
                     <div classes={css.btnArea}>
                         <a classes={[css.btn, css.finishBtn]} onclick={this._submitIden}>提交</a> <Link classes={[css.btn, css.finishBtn]} key='home' to='home'>跳过</Link>
                     </div>

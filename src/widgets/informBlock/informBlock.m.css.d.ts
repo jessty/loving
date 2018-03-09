@@ -9,3 +9,4 @@ export const fixTextarea: string;
 export const btnField: string;
 export const btn: string;
 export const hiddenBtns: string;
+export const customField: string;

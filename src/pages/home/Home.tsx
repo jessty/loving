@@ -4,19 +4,22 @@ import * as css from './home.m.css';
 import { tsx } from '@dojo/widget-core//tsx';
 import VisitingCard, { VisitingCardData } from './../../widgets/visitingCard/VisitingCard';
 import CenterCard, {CenterCardData} from './../../widgets/centerCard/CenterCard';
+import InformBlock, { informBlockProp } from './../../widgets/informBlock/InformBlock';
 import MySelect from './../../widgets/mySelect/MySelect';
-import { allTable } from './../../support/informTables';
+import { allTable, SearchTable } from './../../support/informTables';
 import Upload from './../../widgets/upload/Upload';
 
 export interface HomeProp {
     visitingCard: {
         visitingCardsData: VisitingCardData[];
-        updateVisitingCard: (id: string, like: boolean) => void;
+        updateVisitingCard: (id: number) => void;
     };
     centerCard: {
         centerCardData: CenterCardData;
         arrive: () => void;
-    }
+    },
+    search: () => void;
+    searchData: any;
     
     
 }
@@ -33,7 +36,7 @@ export default class Home extends ThemedMixin(WidgetBase)<HomeProp> {
             <div classes={css.popMyMood}>
                 <h2>倾诉一下心情</h2>
                 <textarea placeholder='今天，我的心情......'></textarea>
-                <Upload extraClasses={{root: css.popUpload}} action={'http://localhost:8800'} multiple={false} accept='image/*' imgsMaxNum={5}></Upload>
+                <Upload name={'avator'} extraClasses={{root: css.popUpload}} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*' imgsMaxNum={5}></Upload>
                 <div classes={css.finishBtn} onclick={this._closePop}>发表</div>
             </div>
         );
@@ -46,6 +49,9 @@ export default class Home extends ThemedMixin(WidgetBase)<HomeProp> {
         }
         
     }
+    private _search() {
+        
+    }
     
     protected render() {
         let {
@@ -56,9 +62,13 @@ export default class Home extends ThemedMixin(WidgetBase)<HomeProp> {
             centerCardData,
             arrive,
         } = this.properties.centerCard;
+        let {
+            searchData,search
+        } = this.properties;
         return (
             <div classes={css.root}>
                 <main>
+                <InformBlock extraClasses={{'root': css.searchBlock, 'customField': css.searchItem}} onSubmit={search} initData={searchData} initState={'read'} fields={SearchTable.fields} editable={true} readable={true}></InformBlock>
                     {/* <div classes={css.search}>
                     {allTable.map((table) => (
                         <div>

@@ -57,7 +57,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
     private _renderSelect(selectField: any, key: string) {
         console.log('selectField', selectField);
         return (
-            <div classes={css.field} key={'select-' + key}>
+            <div classes={[css.field, this.theme(css.customField)]} key={'select-' + key}>
                 <label classes={css.fieldLabel}>{selectField.label}</label>
                 {this._isEditing ?
                     <MySelect choises={selectField.choises} initValue={selectField.value} onChange={this._fieldChange.bind(this, key)}></MySelect> :
@@ -70,10 +70,10 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
     }
     private _renderTextInput(textInputField: any, key: string) {
         return (
-            <div classes={css.field} key={'textInput-' + key}>
+            <div classes={[css.field, this.theme(css.customField)]} key={'textInput-' + key}>
                 <label classes={css.fieldLabel}>{textInputField.label}</label>
                 {this._isEditing ?
-                    <input value={textInputField.value} onchange={({target:{value}}) => {this._fieldChange(key, value);}}/> :
+                    <input type={textInputField.originType ? textInputField.originType : 'text'} value={textInputField.value} onchange={({target:{value}}) => {this._fieldChange(key, value);}}/> :
                     <span classes={css.fieldResult}>
                         {textInputField.value ? textInputField.value + '' : '未填写'}
                     </span>
@@ -83,7 +83,7 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
     }
     private _renderTextArea(textAreaField: any, key: string) {
         return (
-            <div classes={[css.field, css.textareField, (this._isEditing ? null : css.fixTextarea)]} key={'textArea-' + key}>
+            <div classes={[css.field, css.textareField, (this._isEditing ? null : css.fixTextarea), this.theme(css.customField)]} key={'textArea-' + key}>
                 <label classes={css.fieldLabel}>{textAreaField.label}</label>
                 {this._isEditing ?
                     <textarea value={textAreaField.value} onchange={({target:{value}}) => {this._fieldChange(key, value);}}></textarea> :
@@ -173,8 +173,8 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         console.log('inform fields1', this._fields);
     }
     protected render() {
-        // this._initiated ? null : this._initWidget();
-        this._initWidget()
+        this._initiated ? null : this._initWidget();
+        // this._initWidget()
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
                 {this._isEditing ? this._renderEditState() : this._renderReadState()}

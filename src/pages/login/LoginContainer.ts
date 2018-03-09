@@ -7,7 +7,8 @@ function getProperties(inject: AppContext, properties: any) {
         login: inject.login.bind(inject),
         signup: inject.signup.bind(inject),
         updateInform: inject.updateInform.bind(inject),
-        identify: inject.identify.bind(inject)
+        identify: inject.identify.bind(inject),
+        updateAvator: inject.updateAvator.bind(inject)
      };
 }
 

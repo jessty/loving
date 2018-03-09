@@ -11,7 +11,9 @@ function getProperties(inject: AppContext, properties: any) {
         centerCard: {
             centerCardData: inject.centerCardData,
             arrive: inject.arrive.bind(inject),
-        }
+        },
+        search: inject.search.bind(inject),
+        searchData: inject.searchData
      };
 }
 

@@ -7,3 +7,5 @@ export const closePop: string;
 export const popMyMood: string;
 export const finishBtn: string;
 export const popUpload: string;
+export const searchBlock: string;
+export const searchItem: string;

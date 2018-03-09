@@ -43,7 +43,7 @@ export const basicInformTable = {
 			type: 'select',
 			label: '学历：',
 			value: 0,
-			choises: ['未选', '高中及以下', '中专', '大专', '本科', '硕士', '博士']
+			choises: ['未选', '初中', '中专', '高中', '大专', '本科', '硕士', '博士']
 		},
 		salary: {
 			type: 'select',
@@ -110,7 +110,7 @@ export const detailInformTable = {
 			type: 'select',
 			label: '车辆状况：',
 			value: 0,
-			choises: [ '未选', '未购车', '已购车', '不透露']
+			choises: [ '未选', '未购车', '已购车']
 		}
 	}
 };
@@ -273,5 +273,69 @@ export const maritalExpectationIDTable = {
 		}
 	}
 };
+export const SearchTable = {
+	title: '搜索条件',
+	fields: {
+		gender: {
+			type: 'select',
+			label: '性别：',
+			value: 0,
+			choises: [ '未选', '男', '女']
+		},
+    birthday: {
+			type: 'select',
+			label: '年龄：',
+			value: 0,
+			choises: [ '未选', '18-24岁', '25-30岁', '31-35岁', '36-40岁', '41-50岁', '50岁以上']
+		},
+    weight: {
+			type: 'select',
+			label: '体重：',
+			value: 0,
+			choises: [ '未选', '45kg以下', '46-50kg', '51-60kg', '60-70kg', '70-80kg', '80kg以上']
+		},
+		height: {
+			type: 'select',
+			label: '身高：',
+			value: 0,
+			choises: [ '未选', '150cm以下', '150-160cm', '160-170cm', '170-180cm', '180-190cm', '190cm以上']
+		},
+    education: {
+			type: 'select',
+			label: '学历：',
+			value: 0,
+			choises: ['未选', '初中及以上', '中专及以上', '高中及以上', '大专及以上', '本科及以上', '硕士及以上', '博士及以上']
+		},
+    livingPlace: {
+			type: 'textinput',
+			label: '现居地：',
+			value: null
+		},
+    houseStatus: {
+			type: 'select',
+			label: '住房状况：',
+			value: 0,
+			choises: [ '未选', '已购', '租房', '单位宿舍', '家人同住']
+		},
+		carStatus: {
+			type: 'select',
+			label: '车辆状况：',
+			value: 0,
+			choises: [ '未选', '未购车', '已购车']
+		},
+    idenStatus: {
+			type: 'select',
+			label: '是否实名',
+			value: 0,
+			choises: [ '未选', '是', '否']
+		},
+    rank: {
+			type: 'select',
+			label: '用户等级',
+			value: 0,
+			choises: [ '未选', '普通会员', 'vip会员']
+		}
+	}
+}
 
 export const allTable = [basicInformTable, detailInformTable, familyInformTable, habitHobbyTable, loveStatusTable, maritalExpectationIDTable];

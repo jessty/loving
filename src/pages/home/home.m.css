@@ -84,3 +84,14 @@
     margin-top: 8px;
     margin-left: 10px;
 }
+.searchBlock {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 14px;
+    padding-bottom: 14px;
+    margin-right: 14px;
+    margin-bottom: 14px;
+}
+.searchItem {
+    width: 33%;
+}
