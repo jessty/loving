@@ -252,7 +252,7 @@ export default class Login extends LoginBase<LoginProp> {
                     <h4>上传头像</h4>
                     <Upload name={'avator'} extraClasses={{'root': css.uploadRoot, 'img': css.uploadImg}} deliverFile={this._chooseFile.bind(this, 'avator')} numHint={false} action='http://localhost:8800' multiple={false} accept='image/*'></Upload>
                     <h4>写上内心独白吧</h4>
-                    <textarea classes={[css.btnArea, css.quoteArea]} onchange={(e) => {this._chooseFile('avator', e.target.value, 'quote')}></textarea>
+                    <textarea classes={[css.btnArea, css.quoteArea]} onchange={e => {this._chooseFile('avator', e.target.value, 'quote')}}></textarea>
                     <div classes={css.btnArea}>
                         <a classes={[css.btn, css.finishBtn]} onclick={this._submitAvatorData}>提交</a>
                     </div>

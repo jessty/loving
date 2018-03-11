@@ -28,16 +28,18 @@ export interface CenterCardData {
 }
 export interface CenterCardProp {
     centerCardData: CenterCardData;
-    arrive: () => void;
+    arrive: () => any;
     publishMood?: () => void;
 }
 @theme(css)
 export default class  CenterCard extends ThemedMixin(WidgetBase)<CenterCardProp> {
 
     private _baseImgUrl: string = './../../assets/';
-    private _baseCenterUrl: string = '#/center/$1?id=$2';
+    private _baseCenterUrl: string = '#/center/$0?id=$1';
     private _baseSettingsUrl: string = '#/settings';
     private _baseVipUrl: string = '#/vip';
+    private _arrived: boolean = false;
+    private _serverIP:string='http://119.29.76.240:3000'
 
     constructor(parameters: any) {
         super();
@@ -47,9 +49,31 @@ export default class  CenterCard extends ThemedMixin(WidgetBase)<CenterCardProp>
         let {
             arrive
         } = this.properties;
-        arrive();
+        if(!this._arrived) {
+            arrive()
+            .then( res => {
+                this.invalidate();
+            })
+            .catch( err => {
+                console.error('签到失败！')
+            })
+        }
     }
 
+    private _judgeArrived() {
+        let {
+            arrived
+        } = this.properties.centerCardData;
+        if(arrived) {
+            let day1 = (new Date(arrived)).toLocaleDateString(),day2 = (new Date()).toLocaleDateString()
+            let time = (day1 === day2);
+            if(time) {
+                this._arrived = true;
+                return ;
+            }
+        }
+        this._arrived = false;
+    }
     private _writeMood(event: MouseEvent) {
         
     }
@@ -70,10 +94,11 @@ export default class  CenterCard extends ThemedMixin(WidgetBase)<CenterCardProp>
             bean,
         } = this.properties.centerCardData;
         let {publishMood} = this.properties;
+        this._judgeArrived()
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
                 <div classes={css.inform}>
-                    <Link to={getLinkUrl(this._baseCenterUrl, MY_TABS.MOOD, idUser)} isOutlet={false}><img src={'http://localhost:3000/imgs/' + (avator ? 'user/'+avator : 'public/head.jpg'}/></Link>
+                    <Link to={getLinkUrl(this._baseCenterUrl, MY_TABS.MOOD, idUser)} isOutlet={false}><img src={this._serverIP + '/imgs' + (avator ? '/user/'+imgDir+'/'+avator : '/public/head.jpg')}/></Link>
                     <div>
                         <h3>
                             <Link classes={css.nickName} to={getLinkUrl(this._baseCenterUrl, MY_TABS.MOOD, idUser)} isOutlet={false}>{nickname}</Link>
@@ -101,7 +126,7 @@ export default class  CenterCard extends ThemedMixin(WidgetBase)<CenterCardProp>
                     <Link classes={css.receiveMsg} title='查看邮件' key='email' to={'#/center/' + MY_TABS.EMAIL} params={{idUser: idUser}} isOutlet={false}><img src={this._baseImgUrl+'notemail.png'}/></Link>
                 </div>
                 <div classes={css.btns}>
-                    <a classes={arrived ? css.arrived : ''} onclick={this._arrive}>{arrived?'今日已签到':'签到'}</a>
+                    <a classes={this._arrived ? css.arrived : ''} onclick={this._arrive}>{this._arrived ? '今日已签到' : '签到'}</a>
                     <Link key='setVip' to={this._baseVipUrl} isOutlet={false}>{rank === 2?'vip续费':'开通vip'}</Link>
                 </div>
             </div>

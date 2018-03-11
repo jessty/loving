@@ -16,233 +16,37 @@ export default class HomeContext extends Injector {
     private _user: CenterCardData;
     private _searchData: Object;
     private _searchDataName: string;
+    private _serverIP:string='http://119.29.76.240:3000'
 
 	constructor() {
 
         super({});
 
         let visitingCardsData = [
-            {
-                idUser: '12345',
-                avator: './../../assets/pic1.jpg',
-                nickname: '小泷',
-                birthday: '2010-1-1 00:00:00',
-                age: 22,
-                height: 175,
-                education: 2,
-                salary: 3,
-                // job: '白领',
-                quote: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
-                rank: 0,
-                phone: null,
-                idenStatus: 2,
-                idLike: null,
-                preAge: 2,
-                preHeight: 2,
-                preWeight: 1,
-                preEdu: 1,
-                preSalary: 1,
-                preGender: 1,
-                preLivingPlace: '广州'
-            },
-            {
-                idUser: '12345',
-                avator: './../../assets/pic1.jpg',
-                nickname: '小泷',
-                birthday: '2010-1-1 00:00:00',
-                age: 22,
-                height: 175,
-                education: 2,
-                salary: 3,
-                // job: '白领',
-                quote: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
-                rank: 0,
-                phone: '12345',
-                idenStatus: 3,
-                idLike: 12,
-                preAge: 2,
-                preHeight: 2,
-                preWeight: 1,
-                preEdu: 1,
-                preSalary: 1,
-                preGender: 1,
-                preLivingPlace: '广州'
-            },
-            {
-                idUser: '12345',
-                avator: './../../assets/pic1.jpg',
-                nickname: '小泷',
-                birthday: '2010-1-1 00:00:00',
-                age: 22,
-                height: 175,
-                education: 2,
-                salary: 3,
-                // job: '白领',
-                quote: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
-                rank: 0,
-                phone: '12345',
-                idenStatus: 3,
-                idLike: 12,
-                preAge: 2,
-                preHeight: 2,
-                preWeight: 1,
-                preEdu: 1,
-                preSalary: 1,
-                preGender: 1,
-                preLivingPlace: '广州'
-            },
-            {
-                idUser: '12345',
-                avator: './../../assets/pic1.jpg',
-                nickname: '小泷',
-                birthday: '2010-1-1 00:00:00',
-                height: 175,
-                education: 2,
-                salary: 3,
-                // job: '白领',
-                quote: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
-                rank: 0,
-                phone: '12345',
-                idenStatus: 3,
-                idLike: 12,
-                preAge: 0,
-                preHeight: 0,
-                preWeight: 0,
-                preEdu: 0,
-                preSalary: 0,
-                preGender: 1,
-                preLivingPlace: '广州'
-            },
-            
             // {
-            //     id: '12341',
-            //     headImgUrl: './../../assets/pic.jpg',
-            //     nickName: 'STARBUCKS',
-            //     age: 32,
-            //     height: 185,
-            //     edu: '博士',
-            //     salary: '15000-20000',
-            //     job: '私企高管',
-            //     quote: '',
-            //     isVip: true,
-            //     hasPhone: true,
-            //     identified: true,
-            //     like: true,
-            //     desiredAge: '22-30',
-            //     desiredHeight: '175cm以上',
-            //     desiredEdu: '本科',
-            //     desiredSalary: '9000-15000',
-            //     desiredJob: '程序员'
-            // },
-            // {
-            //     id: '12342',
-            //     headImgUrl: './../../assets/pic2.jpg',
-            //     nickName: 'Wonderful',
-            //     age: 20,
-            //     height: 170,
-            //     edu: '本科',
-            //     salary: '2000-5000',
-            //     job: '餐厅兼职',
-            //     quote: '',
-            //     isVip: false,
-            //     hasPhone: false,
-            //     identified: true,
-            //     like: false,
-            //     desiredAge: '18-22',
-            //     desiredHeight: '160cm以上',
-            //     desiredEdu: '本科',
-            //     desiredSalary: '2000-15000',
-            //     desiredJob: '求萌妹子'
-            // },
-            // {
-            //     id: '12343',
-            //     headImgUrl: './../../assets/pic3.jpg',
-            //     nickName: 'Color',
+            //     idUser: '12345',
+            //     avator: './../../assets/pic1.jpg',
+            //     nickname: '小泷',
+            //     birthday: '2010-1-1 00:00:00',
             //     age: 22,
-            //     height: 165,
-            //     edu: '本科',
-            //     salary: '2000-5000',
-            //     job: '名企实习',
-            //     quote: '',
-            //     isVip: false,
-            //     hasPhone: true,
-            //     identified: false,
-            //     like: false,
-            //     desiredAge: '22岁以上',
-            //     desiredHeight: '165cm以上',
-            //     desiredEdu: '本科',
-            //     desiredSalary: '2000-15000',
-            //     desiredJob: '大叔控'
-            // },
-            // {
-            //     id: '12349',
-            //     headImgUrl: './../../assets/pic4.jpg',
-            //     nickName: '告白气球',
-            //     age: 22,
-            //     height: 165,
-            //     edu: '本科',
-            //     salary: '2000-5000',
-            //     job: '名企实习',
-            //     quote: '',
-            //     isVip: false,
-            //     hasPhone: true,
-            //     identified: true,
-            //     like: false,
-            //     desiredAge: '22岁以上',
-            //     desiredHeight: '165cm以上',
-            //     desiredEdu: '本科',
-            //     desiredSalary: '2000-15000',
-            //     desiredJob: '大叔控'
-            // },
-            // {
-            //     id: '12348',
-            //     headImgUrl: './../../assets/pic2.jpg',
-            //     nickName: 'Jack',
-            //     age: 22,
-            //     height: 165,
-            //     edu: '本科',
-            //     salary: '2000-5000',
-            //     job: '名企实习',
-            //     quote: '',
-            //     isVip: true,
-            //     hasPhone: true,
-            //     identified: false,
-            //     like: false,
-            //     desiredAge: '22岁以上',
-            //     desiredHeight: '165cm以上',
-            //     desiredEdu: '本科',
-            //     desiredSalary: '2000-15000',
-            //     desiredJob: '大叔控'
-            // },
+            //     height: 175,
+            //     education: 2,
+            //     salary: 3,
+            //     // job: '白领',
+            //     quote: '在一回首间，才忽然发现，原来，我一生的种种努力，不过只为了周遭的人对我满意而已。为了搏得他人的称许与微笑，我战战兢兢地将自己套入所有的模式所有的桎梏。走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路。',
+            //     rank: 0,
+            //     phone: null,
+            //     idenStatus: 2,
+            //     idLike: null,
+            //     preAge: 2,
+            //     preHeight: 2,
+            //     preWeight: 1,
+            //     preEdu: 1,
+            //     preSalary: 1,
+            //     preGender: 1,
+            //     preLivingPlace: '广州'
+            // }
         ]
-    //     let centerCardData = {
-    //         idUser?: number;
-    // avator?: string;
-    // nickname?: string;
-    // // age: number;
-    // // height: number;
-    // // edu: string;
-    // // salary: string;
-    // // job: string;
-    // // quote: string;
-    // rank?: number;
-    // phone?: string;
-    // email?: string;
-    // idenStatus?: number;
-    // arrived?: boolean;
-    // credit?: number;
-    // bean: number;
-    //         id : '12340',
-    //         headImgUrl : './../../assets/pic1.jpg',
-    //         nickName : 'Yomocy',
-    //         isVip : true,
-    //         hasPhone : true,
-    //         hasEmail : true,
-    //         identified : true,
-    //         arrived : false,
-    //         credits : 9999,
-    //         beans : 1000
-    //     };
         let basicInformData = {
             nickname: null,
             maritalStatus: 0,
@@ -350,18 +154,6 @@ export default class HomeContext extends Injector {
         this._visitingCardsData = visitingCardsData;
         this._centerCardData;
         this._user = {
-            idUser: 12,
-            credit: 12,
-            bean: 12,
-            rank: 2,
-            phone: '858565',
-            email: '658658',
-            imgDir: '12',
-            avator: './../../assets/pic1.jpg',
-            quote: '12',
-            loginTime: '2012-1-1 10:00:00',
-            idIden: 12,
-            idenStatus: 3
         };
 
 
@@ -375,26 +167,34 @@ export default class HomeContext extends Injector {
             window.location.href = '#/home';
             Object.assign(this._user, res.data.data);
             this._initSearchData(res.data.data.idUser);
+            this._saveData(res.data.data);
+            localStorage.setItem('id', res.data.data.idUser)
         }
         return res.data
     }
-// 注册
+    // 注册
     public async signup(formData: Object) {
         formData.signupTime = new Date();
-
+        
         let res = await axios.post('/signup', formData);
-
+        
         if ( res.status === 200 ) {
             let data = res.data.data;
-
+            
             Object.assign(this._user, data);
             this._basicInformData.nickname = '用户-' + data.idUser;
             this._initSearchData(data.idUser)
+            localStorage.setItem('id', res.data.data.idUser)
+            this._saveData(res.data.data);
             return this._basicInformData;
         }else {
             console.error('AppContext.ts: signup()', res);
             return undefined;
         }
+    }
+    private _saveData(userdata:any) {
+        let datastr = JSON.stringify(userdata)
+        sessionStorage.setItem('user-data', datastr);
     }
 // 获取用户信息
     public async fetchInform(table: string, idUser: number) {
@@ -435,12 +235,12 @@ export default class HomeContext extends Injector {
 
 // 获取相册列表
     public async getAlbums(idUser: number|string, fn: any) {
-        let res = await axios.get(`/album?idUser=${idUser}`);
+        let res = await axios.get(`/album/all?idUser=${idUser}`);
         if(res.status === 200) {
             let {imgDir, albums} = res.data.data;
             albums.forEach((album: any) => {
                 album.imgs.forEach((img: any) => {
-                    img.imgUrl = 'http://localhost:3000/imgs/user/' + imgDir + '/' + img.imgUrl;
+                    img.imgUrl = this._serverIP + '/imgs/user/' + imgDir + '/' + img.imgUrl;
                 })
             })
             this._albums = albums;
@@ -454,7 +254,7 @@ export default class HomeContext extends Injector {
             let {imgDir, albums} = res.data.data;
             albums.forEach((album: any) => {
                 album.imgs.forEach((img: any) => {
-                    img.imgUrl = 'http://localhost:3000/imgs/user/' + imgDir + '/' + img.imgUrl;
+                    img.imgUrl = this._serverIP + '/imgs/user/' + imgDir + '/' + img.imgUrl;
                 })
             })
             this._albums = albums;
@@ -465,10 +265,17 @@ export default class HomeContext extends Injector {
 	get centerCardData(): CenterCardData {
 		return this._user;
     }
-    public arrive() {
+    public async arrive() {
         console.log('arrive',this._centerCardData);
-        this._centerCardData = deepAssign({}, this._centerCardData, {arrived: true});
-        this.emit({ type: 'invalidate' });
+        let res = await axios.post('/arrive', {
+            arrived: new Date()
+        })
+        if(res.status === 200) {
+            this._centerCardData = deepAssign({}, this._centerCardData, {arrived: true});
+            this.emit({type: 'invalidate' });
+            return res.data;
+        }
+
         console.log('arrive',this._centerCardData);
     }
 
@@ -508,9 +315,9 @@ export default class HomeContext extends Injector {
     get searchData(){
         return this._searchData;
     }
-    private _initSearchData(id) {
+    private _initSearchData(id:number|string) {
         this._searchDataName = 'search-data'+ id
-        let searchData = this._readSearchData(this._searchDataName);
+        let searchData = this.readSearchData(this._searchDataName);
         if(searchData) {
             this._searchData = searchData;
         }else {
@@ -527,7 +334,7 @@ export default class HomeContext extends Injector {
         }
         this.search(this._searchData)
     }
-    private _readSearchData(name: string) {
+    public readSearchData(name: string) {
         let dataStr = localStorage.getItem(name);
         return JSON.parse(dataStr);
     }
@@ -541,7 +348,7 @@ export default class HomeContext extends Injector {
         localStorage.setItem(this._searchDataName, dataStr);
     }
     public search(searchData: Object|undefined) {
-        Object.assign(this._searchData, searchData)
+        this._searchData = Object.assign({},this._searchData, searchData)
         axios.post('/inform/search', this._searchData)
         .then((res) => {
             if(res.status === 200) {

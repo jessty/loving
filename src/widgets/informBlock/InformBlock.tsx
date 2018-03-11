@@ -166,7 +166,9 @@ export default class InformBlock extends ThemedMixin(WidgetBase)<informBlockProp
         if (initData) {
             for (let p in initData) {
                 console.log('prop', p);
-                this._fields[p].value = initData[p];
+                if(this._fields[p]) {
+                    this._fields[p].value = initData[p];
+                }
             }
         }
         

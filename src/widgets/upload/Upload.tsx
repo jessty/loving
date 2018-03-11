@@ -3,7 +3,7 @@ import { ThemedMixin, theme } from '@dojo/widget-core/mixins/Themed';
 import { tsx } from '@dojo/widget-core//tsx';
 import * as css from './upload.m.css';
 // import afterRender from "@dojo/widget-core/decorators/afterRender";
-import axois from 'axios';
+import axios from 'axios';
 
 export interface UploadProp {
     action?: string;
@@ -15,6 +15,8 @@ export interface UploadProp {
     deliverFile?: (config: any, name: string) => void;
     numHint?:boolean;
     name:string;
+    reflesh?:boolean;
+    params?:any;
 }
 @theme(css)
 export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
@@ -53,14 +55,21 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
             this._deliverFile(img.binaryData, this._name);
 
         }else {
+            let {params} = this.properties;
             let data = new FormData();
+            if(params){
+                for(let p in params) {
+                    data.append(p, params[p])
+                }
+            }
             data.append(name, img.binaryData);
 
             let config = {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
-                timeout: 5000,
+                timeout: 30000,
+                withCredentials: true,
                 onUploadProgress: (process: any) => {
                     if(!process.lengthComputable) {
                         return;
@@ -76,7 +85,7 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
                 }
             };
 
-            axois.post(
+            axios.post(
                 this._action,
                 data,
                 config
@@ -113,7 +122,7 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
             let img = {
                 id: undefined,
                 name: file.name,
-                url: URL.createObjectURL(file),
+                imgUrl: URL.createObjectURL(file),
                 state: 'doing',//doing, succeed, fail
                 process: 0,
                 binaryData: file
@@ -206,13 +215,18 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
     // }
     private _clickItem(img: any, i: number, imgs: Array<any>) {
         let {clickItem} = this.properties;
-        let imgUrl = img.url;
-        let imgUrls = imgs.map((img) => img.url);
+        let imgUrl = img.ImgUrl;
+        let imgUrls = imgs.map((img) => img.imgUrl);
         clickItem ? clickItem(imgUrl, i, imgUrls) : null;
     }
     protected render() {
         console.log('render', this.properties);
-        this._initial ? null : this.initialize();
+        let {reflesh} = this.properties;
+        if(reflesh) {
+            this.initialize();
+        }else {
+            this._initial ? null : this.initialize();
+        }
         // this._imgs =this.properties.initImgs ? this.properties.initImgs.map((img)=>{
         //     return Object.assign(img, {
         //         state: 'succeed',//doing, succeed, fail
@@ -240,7 +254,7 @@ export default class Upload extends ThemedMixin(WidgetBase)<UploadProp> {
             <ul classes={[this.theme(css.root), css.rootFixed]}>
                 {this._imgs.map((img, i, imgs) => (
                     <li key={`img${this._random}${i}`} classes={[this.theme(css.img), css.imgFixed]}>
-                        <img classes={this._numHint && img.state !== 'succeed' ? css.imgBlur : ''} src={img.url} onclick={()=>{this._clickItem(img, i, imgs)}}/>
+                        <img classes={this._numHint && img.state !== 'succeed' ? css.imgBlur : ''} src={img.imgUrl} onclick={()=>{this._clickItem(img, i, imgs)}}/>
                         {this._numHint && img.state !== 'succeed' ? (
                             this._renderImgCover(img, i)
                         ) : null}

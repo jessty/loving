@@ -12,7 +12,7 @@ export const CenterOutlet = Outlet(CenterContainer, 'center', (inform) => {
                 if (MY_TABS[key] === params.tab) {
 
                     console.log('id', inform)
-                    return {tab: params.tab, id:9 };
+                    return {tab: params.tab, id: params.id };
                 }
             }
             //route to Error.html

@@ -4,7 +4,7 @@ export const basicInformTable = {
 		nickname: {
 			type: 'textinput',
 			label: '昵称：',
-			value: 'star',
+			value: '',
 		},
 		maritalStatus: {
 			type: 'select',

@@ -43,10 +43,10 @@ export interface VisitingCardData {
 
 @theme(css)
 export default class  VisitingCard extends ThemedMixin(WidgetBase)<VisitingCardProp> {
-    // private _baseImgUrl: string = 'http://localhost:3000/imgs/user';
+    // private _baseImgUrl: string = this._serverIP + '/imgs/user';
     private _baseImgUrl: string = '../../assets/';
     private _data:any;
-
+    private _serverIP: string = 'http://119.29.76.240:3000';
     constructor(parameters: any) {
         super();
     }
@@ -176,13 +176,14 @@ export default class  VisitingCard extends ThemedMixin(WidgetBase)<VisitingCardP
             phone,
             idenStatus,
             idLike,
+            imgDir
         } = this._data;
 
         return (
             <div classes={[this.theme(css.root), css.rootFixed]}>
                 <div classes={css.portrait}>
                     <Link to={'#/center/myMood?id=' + idUser} params={{tab: 'myCenter', id: idUser}} isOutlet={false}>
-                        <img src={'http://localhost:3000/imgs/' + (avator ? 'user/'+avator : 'public/head.jpg')}/>
+                        <img src={this._serverIP + '/imgs' + (avator ? '/user/'+ imgDir +'/'+ avator : '/public/head.jpg')}/>
                     </Link>    
                 </div>
                 <div>

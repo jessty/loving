@@ -53,7 +53,7 @@
     animation-delay: 1s;
 }
 .portrait:hover {
-    transform: translateY(-1em);
+    /* transform: translateY(-1em); */
 }
 .portrait:hover::before, .portrait:hover::after {
     animation: none;
@@ -86,7 +86,7 @@
     transition: transform 0.3s ease-in-out;
     transform: translate(-50%, -50%) ;
 }
-.portrait:hover .label:nth-child(2) {
+/* .portrait:hover .label:nth-child(2) {
     transform:translate(-50%, -50%) rotateZ(60deg) translateY(7.1em);
 }
 .portrait:hover .label:nth-child(3) {
@@ -100,12 +100,12 @@
 }
 .portrait:hover .label:nth-child(6) {
     transform:translate(-50%, -50%) rotateZ(-60deg) translateY(7.1em);
-}
+} */
 .portrait+div, .portrait+div+blockquote{
     transition: transform 0.1s ease-in-out 0.15s;
 }
 .portrait:hover+div, .portrait:hover+div+blockquote{
-    transform: translateY(0.6em);
+    /* transform: translateY(0.6em); */
 }
 .nickname {
     margin:0.4em;
