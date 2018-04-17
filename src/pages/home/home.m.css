@@ -17,3 +17,81 @@
 .root>aside {
     margin-left: -256px;
 }
+
+.popLayer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.popLayer.showPop {
+    opacity: 1;
+    pointer-events: auto;
+}
+.popContent {
+    position: relative;
+    padding: 2em;
+    background: white;
+    border-radius: 2px;
+    width: 32em;
+}
+.closePop {
+    position: absolute;
+    padding: 7px;
+    font-size: 18px;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: rgb(185, 186, 187)；
+}
+/* .popMyMood {
+    padding: 2em;
+    background: white;
+    border-radius: 2px;
+    width: 32em;
+} */
+.popMyMood > h2 {
+    font-size: 18px;
+    margin-bottom: 1em;
+}
+.popMyMood > textarea {
+    font-size: 16px;
+    border: 1px solid rgb(185, 186, 187);
+    border-radius: 5px;
+    width: 100%;
+    height: 6em;
+}
+.popMyMood > .finishBtn {
+    display: block;
+    padding: 0.5em 2.5em;
+    width: 2em;
+    margin: 0em auto;
+    background: rgb(43, 117, 202);
+    border-radius: 5px;
+    cursor: pointer;
+}
+.popUpload {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+    margin-left: 10px;
+}
+.searchBlock {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 14px;
+    padding-bottom: 14px;
+    margin-right: 14px;
+    margin-bottom: 14px;
+}
+.searchItem {
+    width: 33%;
+}

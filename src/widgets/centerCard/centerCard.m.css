@@ -107,4 +107,5 @@
     background: white;
     color: rgb(168, 168, 168);
     border: 1px solid rgb(168, 168, 168);
+    cursor: default;
 }

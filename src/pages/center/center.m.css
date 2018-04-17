@@ -94,3 +94,221 @@
     margin: 25px 100px 25px;
 
 }
+
+.albumsWrap{
+    list-style: none;
+}
+.album {
+    margin: 3em 0em;
+    padding: 2.5em 1.5em 1em;
+    border: 1px solid rgb(208, 208, 208);
+    border-radius: 5px;
+    position: relative;
+}
+.album > h2 {
+    position: absolute;
+    top: 0;
+    left: -0.5em;
+    font-size: 20px;
+    padding: 0.5em;
+    background: white;
+    transform: translateY(-50%);
+}
+
+.popLayer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.popLayer.showPop {
+    opacity: 1;
+    pointer-events: auto;
+}
+.popContent {
+    position: relative;
+    /* padding: 2em; */
+    /* background: white; */
+    border-radius: 2px;
+    width: 75em;
+}
+.closePop {
+    position: absolute;
+    padding: 7px;
+    font-size: 18px;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    color: rgb(185, 186, 187)；
+}
+
+.swiperContainer {
+    height: 600px;
+}
+.swiperWrap {
+    display: flex;
+    align-items: center;
+}
+.swiperSlide *{
+    display: inline-block;
+    height: inherit;
+
+    /* width: 100%; */
+}
+.swiperContainer>.swiperBtn {
+    pointer-events: auto;
+}
+.swiperSlide {
+    /* margin: 0px 4em; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.swiperSlide > img {
+    box-sizing: border-box;
+    /* width: inherit; */
+    padding: 0px 3em;
+}
+
+
+
+
+/* emailxiangguan */
+.emailSec {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.emailBar>div {
+    /* width: 100%; */
+    padding: 1rem 2rem;
+    text-align: center;
+    border-bottom: 2px solid #F7F7F7;
+    border-right: 2px solid #F7F7F7;
+    cursor: pointer;
+}
+.emailBar>div:hover {
+    border-bottom-color: rgb(93, 158, 243);
+}
+.emailPane {
+    flex-grow: 1;
+}
+.emailList {
+    list-style: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin: 1rem;
+}
+.emailList>li {
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid gray;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.emailList .emailMan, .emailList .emailMan {
+    width: 3.5rem;
+}
+.eamilFiled {
+    margin: 1rem 0;
+    display: flex;
+    align-items: stretch;
+}
+.eamilFiled>span {
+    width: 4.5rem;
+    display: inline-block;
+}
+.eamilFiled input {
+    height: 1.5rem;
+}
+.eamilFiled textarea {
+    min-width: 200px;
+    max-width: 500px;
+    min-height: 300px;
+}
+.writeArea input, .writeArea textarea{
+    flex-grow: 1;
+}
+.writeBtnArea {
+    width: 100%;
+    text-align: center;
+}
+.writeBtnArea>button {
+    padding: 0.5rem 1rem;
+}
+.hide {
+    display: none;
+}
+
+.newcoming {
+    position: relative;
+}
+.newcoming::after {
+    position: absolute;
+    content: '';
+    border-radius: 50%;
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    top: 5px;
+    right: 5px;
+}
+.emailContent {
+    margin: 1rem 2rem;
+}
+.emailContent>span {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+.emailBody {
+    text-indent: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(182, 182, 182)
+}
+
+
+/* mood */
+.moodWritePad {
+    display: flex;
+}
+.moodWritePad>div:first-child{
+    width: 60%;
+    padding: 0 1rem 0.7rem;
+    flex-grow: 1;
+    min-width: 50%;
+}
+.moodWritePad textarea {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+}
+.moodControls{
+    /* flex-shrink: 1; */
+}
+.spanBtn{
+    border: 1px solid gray;
+    padding: 0.5rem 1.5rem;
+    display: inline-block;
+    margin: 0.5rem 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.createAlbumArea>input{
+    height: 2.1rem;
+    font-size: 1.2rem;
+    border-radius: 3px;
+    border: 1px solid gray;
+    margin-right: 1rem;
+}

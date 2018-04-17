@@ -64,3 +64,7 @@
     background: url(./../../assets/settings.png) no-repeat center;
     background-size: 55%;
 }
+.exit {
+    background: url(./../../assets/exit.png) no-repeat center;
+    background-size: 40%;
+}
