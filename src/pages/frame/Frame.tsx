@@ -6,6 +6,7 @@ import { HomeOutlet } from './../../outlets/HomeOutlet';
 import { CenterOutlet } from './../../outlets/center/CenterOutlet';
 import { ActivityOutlet } from './../../outlets/ActivityOutlet';
 import { NewsAreaOutlet } from './../../outlets/NewsAreaOutlet';
+import { SettingsOutlet } from './../../outlets/SettingsOutlet';
 import * as css from './frame.m.css';
 export interface FrameProp {
     subpath: string;
@@ -33,6 +34,7 @@ export default class Frame extends ThemedMixin(WidgetBase)<FrameProp> {
                     <CenterOutlet></CenterOutlet>
                     <ActivityOutlet></ActivityOutlet>
                     <NewsAreaOutlet></NewsAreaOutlet>
+                    <SettingsOutlet></SettingsOutlet>
                 </section>
             </div>
         );
